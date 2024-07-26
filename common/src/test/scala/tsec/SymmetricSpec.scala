@@ -1,11 +1,10 @@
 package tsec
 
 import cats.effect.IO
-import org.scalacheck._
-import tsec.cipher.symmetric.{Encryptor, IvGen, _}
+import cats.effect.unsafe.implicits.global
+import tsec.cipher.symmetric._
 import tsec.common._
 import tsec.keygen.symmetric._
-import cats.effect.unsafe.implicits.global
 
 import scala.util.Random
 
@@ -43,7 +42,7 @@ class SymmetricSpec extends TestSpec {
           encrypted <- E.encrypt(testPlainText, key1)(gen, cats.Monad[IO])
           decrypted <- E.decrypt(encrypted, key2)
         } yield decrypted.toUtf8String
-        if (!testMessage.isEmpty)
+        if (testMessage.nonEmpty)
           testEncryptionDecryption.attempt.unsafeRunSync() mustNot equal(Right(testMessage))
       }
     }
@@ -51,7 +50,7 @@ class SymmetricSpec extends TestSpec {
     behavior of (spec + " Key Generator")
 
     it should "Not allow a key with incorrect length" in {
-      //Totally ok, since no keys are 100 in size
+      // Totally OK, since no keys are 100 in size
       val randomKey: Array[Byte] = (1 until 100).toArray.map(_ => Random.nextInt(128).toByte)
       val keyLenTest: IO[K[A]] = for {
         k <- S.build(randomKey)
@@ -80,7 +79,7 @@ class SymmetricSpec extends TestSpec {
           encrypted <- E.encrypt(testPlainText, key)(gen, cats.Monad[IO])
           decrypted <- E.decrypt(encrypted, key)
         } yield decrypted.toUtf8String
-        if (!testMessage.isEmpty)
+        if (testMessage.nonEmpty)
           testEncryptionDecryption.attempt.unsafeRunSync() must equal(Right(testMessage))
       }
     }
@@ -94,7 +93,7 @@ class SymmetricSpec extends TestSpec {
           encrypted <- E.encrypt(testPlainText, key1)(gen, cats.Monad[IO])
           decrypted <- E.decrypt(encrypted, key2)
         } yield decrypted.toUtf8String
-        if (!testMessage.isEmpty)
+        if (testMessage.nonEmpty)
           testEncryptionDecryption.attempt.unsafeRunSync() mustNot equal(Right(testMessage))
       }
     }
@@ -108,7 +107,7 @@ class SymmetricSpec extends TestSpec {
           encrypted <- E.encryptDetached(testPlainText, key)(gen, cats.Monad[IO])
           decrypted <- E.decryptDetached(encrypted._1, key, encrypted._2)
         } yield decrypted.toUtf8String
-        if (!testMessage.isEmpty)
+        if (testMessage.nonEmpty)
           testEncryptionDecryption.attempt.unsafeRunSync() must equal(Right(testMessage))
       }
     }
@@ -122,7 +121,7 @@ class SymmetricSpec extends TestSpec {
           encrypted <- E.encryptDetached(testPlainText, key1)(gen, cats.Monad[IO])
           decrypted <- E.decryptDetached(encrypted._1, key2, encrypted._2)
         } yield decrypted.toUtf8String
-        if (!testMessage.isEmpty)
+        if (testMessage.nonEmpty)
           testEncryptionDecryption.attempt.unsafeRunSync() mustNot equal(Right(testMessage))
       }
     }
@@ -130,7 +129,7 @@ class SymmetricSpec extends TestSpec {
     behavior of (spec + " Key Generator")
 
     it should "Not allow a key with incorrect length" in {
-      //Totally ok, since no keys are 100 in size
+      // Totally OK, since no keys are 100 in size
       val randomKey: Array[Byte] = (1 until 100).toArray.map(_ => Random.nextInt(128).toByte)
       val keyLenTest: IO[K[A]] = for {
         k <- S.build(randomKey)
@@ -144,7 +143,7 @@ class SymmetricSpec extends TestSpec {
       implicit E: AADEncryptor[IO, A, K],
       S: SymmetricKeyGen[IO, A, K]
   ): Unit = {
-    implicit val strat = gen
+    implicit val strat: IvGen[IO, A] = gen
 
     val spec = s"""AEAD Cipher: $testName"""
 
@@ -158,7 +157,7 @@ class SymmetricSpec extends TestSpec {
           encrypted <- E.encrypt(testPlainText, key)
           decrypted <- E.decrypt(encrypted, key)
         } yield decrypted.toUtf8String
-        if (!testMessage.isEmpty)
+        if (testMessage.nonEmpty)
           testEncryptionDecryption.attempt.unsafeRunSync() must equal(Right(testMessage))
       }
     }
@@ -172,7 +171,7 @@ class SymmetricSpec extends TestSpec {
           encrypted <- E.encryptWithAAD(testPlainText, key, aad)
           decrypted <- E.decryptWithAAD(encrypted, key, aad)
         } yield decrypted.toUtf8String
-        if (!testMessage.isEmpty)
+        if (testMessage.nonEmpty)
           testEncryptionDecryption.attempt.unsafeRunSync() must equal(Right(testMessage))
       }
     }
@@ -186,7 +185,7 @@ class SymmetricSpec extends TestSpec {
           encrypted <- E.encrypt(testPlainText, key1)
           decrypted <- E.decrypt(encrypted, key2)
         } yield decrypted.toUtf8String
-        if (!testMessage.isEmpty)
+        if (testMessage.nonEmpty)
           testEncryptionDecryption.attempt.unsafeRunSync() mustNot equal(Right(testMessage))
       }
     }
@@ -201,7 +200,7 @@ class SymmetricSpec extends TestSpec {
           encrypted <- E.encryptWithAAD(testPlainText, key1, aad1)
           decrypted <- E.decryptWithAAD(encrypted, key1, aad2)
         } yield decrypted.toUtf8String
-        if (!testMessage.isEmpty && !AAD1.isEmpty && !AAD2.isEmpty)
+        if (testMessage.nonEmpty && AAD1.nonEmpty && AAD2.nonEmpty)
           testEncryptionDecryption.attempt.unsafeRunSync() mustNot equal(Right(testMessage))
       }
     }
@@ -215,7 +214,7 @@ class SymmetricSpec extends TestSpec {
           encrypted <- E.encryptDetached(testPlainText, key)
           decrypted <- E.decryptDetached(encrypted._1, key, encrypted._2)
         } yield decrypted.toUtf8String
-        if (!testMessage.isEmpty)
+        if (testMessage.nonEmpty)
           testEncryptionDecryption.attempt.unsafeRunSync() must equal(Right(testMessage))
       }
     }
@@ -229,7 +228,7 @@ class SymmetricSpec extends TestSpec {
           encrypted <- E.encryptWithAADDetached(testPlainText, key, aad)
           decrypted <- E.decryptWithAADDetached(encrypted._1, key, aad, encrypted._2)
         } yield decrypted.toUtf8String
-        if (!testMessage.isEmpty)
+        if (testMessage.nonEmpty)
           testEncryptionDecryption.attempt.unsafeRunSync() must equal(Right(testMessage))
       }
     }
@@ -243,7 +242,7 @@ class SymmetricSpec extends TestSpec {
           encrypted <- E.encryptDetached(testPlainText, key1)
           decrypted <- E.decryptDetached(encrypted._1, key2, encrypted._2)
         } yield decrypted.toUtf8String
-        if (!testMessage.isEmpty)
+        if (testMessage.nonEmpty)
           testEncryptionDecryption.attempt.unsafeRunSync() mustNot equal(Right(testMessage))
       }
     }
@@ -258,7 +257,7 @@ class SymmetricSpec extends TestSpec {
           encrypted <- E.encryptWithAADDetached(testPlainText, key1, aad1)
           decrypted <- E.decryptWithAADDetached(encrypted._1, key1, aad2, encrypted._2)
         } yield decrypted.toUtf8String
-        if (!testMessage.isEmpty && !AAD1.isEmpty && !AAD2.isEmpty)
+        if (testMessage.nonEmpty && AAD1.nonEmpty && AAD2.nonEmpty)
           testEncryptionDecryption.attempt.unsafeRunSync() mustNot equal(Right(testMessage))
       }
     }

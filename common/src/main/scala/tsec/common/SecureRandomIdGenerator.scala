@@ -13,7 +13,7 @@ case class SecureRandomIdGenerator(sizeInBytes: Int = 32) extends ManagedRandom 
   def generateF[F[_]](implicit F: Sync[F]): F[SecureRandomId] = F.delay(generate)
 }
 
-//Todo: Possible use case for refined?
+// TODO: Possible use case for refined?
 object SecureRandomId {
   lazy val Strong: SecureRandomIdGenerator      = SecureRandomIdGenerator(32)
   lazy val Interactive: SecureRandomIdGenerator = SecureRandomIdGenerator(16)

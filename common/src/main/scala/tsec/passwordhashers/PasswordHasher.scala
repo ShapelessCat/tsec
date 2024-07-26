@@ -1,11 +1,11 @@
 package tsec.passwordhashers
 
-import java.nio.CharBuffer
-
 import cats.{Functor, Id}
 import tsec.common._
 
-//Todo: deal with unsafe pw hashing in a more principled style
+import java.nio.CharBuffer
+
+// TODO: deal with unsafe pw hashing in a more principled style
 trait PasswordHasher[F[_], A] {
 
   final def hashpw(p: String): F[PasswordHash[A]] = hashpw(p.asciiBytes)
@@ -41,7 +41,7 @@ trait PasswordHasher[F[_], A] {
     val charbuffer = CharBuffer.wrap(p)
     val bytes      = defaultCharset.encode(charbuffer).array()
     val out        = hashPassUnsafe(bytes)
-    //Clear pass
+    // Clear pass
     ByteUtils.zeroCharArray(p)
     ByteUtils.zeroByteArray(bytes)
     PasswordHash[A](out)
@@ -115,7 +115,7 @@ trait PasswordHasher[F[_], A] {
     */
   final def checkpwUnsafe(p: Array[Byte], hash: PasswordHash[A]): Boolean = {
     val out = checkPassUnsafe(p, hash)
-    //Clear pass
+    // Clear pass
     ByteUtils.zeroByteArray(p)
     out
   }
@@ -130,7 +130,7 @@ trait PasswordHasher[F[_], A] {
     val charbuffer = CharBuffer.wrap(p)
     val bytes      = defaultCharset.encode(charbuffer).array()
     val out        = checkPassUnsafe(bytes, hash)
-    //Clear pass
+    // Clear pass
     ByteUtils.zeroCharArray(p)
     ByteUtils.zeroByteArray(bytes)
     out

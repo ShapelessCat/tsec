@@ -1,7 +1,5 @@
 package tsec.common
 
-import java.security.MessageDigest
-
 import cats.Eq
 import cats.syntax.eq._
 

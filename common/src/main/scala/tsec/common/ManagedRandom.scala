@@ -2,8 +2,7 @@ package tsec.common
 
 import java.security.SecureRandom
 
-/** A trait that manages a secureRandom instance.
-  */
+/** A trait that manages a secureRandom instance. */
 trait ManagedRandom {
 
   /** Cache our random, and seed it properly as per
@@ -12,7 +11,7 @@ trait ManagedRandom {
   private[tsec] val cachedRand: SecureRandom = {
     val r =
       SecureRandom.getInstance(if (scala.util.Properties.isWin) ManagedRandom.WinRandom else ManagedRandom.UnixURandom)
-    r.nextBytes(new Array[Byte](20)) //Force reseed
+    r.nextBytes(new Array[Byte](20)) // Force reseed
     r
   }
 

@@ -1,10 +1,10 @@
 package tsec.hashing
 
-import java.security.MessageDigest
-
 import cats.Functor
 import fs2.Pipe
 import tsec.common.{VerificationFailed, VerificationStatus, Verified}
+
+import java.security.MessageDigest
 
 trait CryptoHasher[F[_], A] {
 

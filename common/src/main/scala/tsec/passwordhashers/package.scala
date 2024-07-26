@@ -1,8 +1,8 @@
 package tsec
 
-import java.nio.charset.{Charset, StandardCharsets}
-
 import tsec.common.TSecError
+
+import java.nio.charset.{Charset, StandardCharsets}
 
 package object passwordhashers {
 
