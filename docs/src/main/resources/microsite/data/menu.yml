@@ -48,7 +48,6 @@ options:
       section: http4-auth
     - title: CSRF prevention
       section: http4-auth
-      title: CSRF
       url: docs/http4s/csrf.html
 
   - title: Common Utils
