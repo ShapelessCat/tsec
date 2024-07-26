@@ -9,6 +9,7 @@ object GenSodiumPlugin extends sbt.AutoPlugin {
   object autoImport {
     lazy val gensodium = taskKey[Unit]("Generate ScalaSodium0.scala")
   }
+
   import autoImport._
 
   override def buildSettings = Seq(

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 cd tsec-libsodium/jni
-#Setup script adapted from android libsodium library
+# Setup script adapted from android libsodium library
 set -e
 
 if [ -z "$JAVA_HOME" ]; then
@@ -16,9 +16,9 @@ echo "${JAVA_HOME}"
 C_INCLUDE_PATH="${JAVA_HOME}/include:${JAVA_HOME}/include/linux:/System/Library/Frameworks/JavaVM.framework/Headers"
 export C_INCLUDE_PATH
 
-rm -f *.java
-rm -f *.c
-rm -f *.so
+rm -f -- *.java
+rm -f -- *.c
+rm -f -- *.so
 
 export PATH=/usr/local/bin:$PATH
 
@@ -44,9 +44,15 @@ echo $destlib
 echo $destlib/$jnilib
 
 
-gcc -I../usr/local/include/sodium -I${JAVA_HOME}/include -I${JAVA_HOME}/include/linux -I${JAVA_HOME}/include/darwin sodium_wrap.c -shared -fPIC -L/usr/local/lib -L/usr/lib -lsodium -o $jnilib
+gcc -I"../usr/local/include/sodium" \
+    -I"${JAVA_HOME}/include" \
+    -I"${JAVA_HOME}/include/linux" \
+    -I"${JAVA_HOME}/include/darwin" \
+    sodium_wrap.c \
+    -shared -fPIC -L/usr/local/lib -L/usr/lib -lsodium \
+    -o $jnilib
 sudo rm -f $destlib/$jnilib
 sudo cp $jnilib $destlib
-rm -f *.java
-rm -f *.c
-rm -f *.so
+rm -f -- *.java
+rm -f -- *.c
+rm -f -- *.so
