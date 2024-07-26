@@ -1,4 +1,5 @@
 package tsec.cipher.symmetric.bouncy
+
 import tsec.cipher.symmetric._
 import tsec.cipher.symmetric.bouncy.internal.XChaCha20Engine
 

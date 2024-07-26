@@ -1,16 +1,15 @@
 package tsec.cipher.symmetric.bouncy
 
-import java.security.MessageDigest
-
 import cats.effect.Sync
 import org.bouncycastle.crypto.engines.XSalsa20Engine
 import org.bouncycastle.crypto.macs.Poly1305
 import org.bouncycastle.crypto.params.{KeyParameter, ParametersWithIV}
-import tsec.Bouncy
 import tsec.cipher._
-import tsec.cipher.symmetric.{IvGen, _}
+import tsec.cipher.symmetric._
 import tsec.common.ManagedRandom
 import tsec.keygen.symmetric.SymmetricKeyGen
+
+import java.security.MessageDigest
 
 /** https://tools.ietf.org/html/rfc7539#section-2.5
   * impl derived from:

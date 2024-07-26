@@ -1,8 +1,5 @@
 package tsec.cipher.symmetric.bouncy
 
-import java.security.MessageDigest
-import java.util
-
 import cats.effect.Sync
 import org.bouncycastle.crypto.StreamCipher
 import org.bouncycastle.crypto.macs.Poly1305
@@ -12,6 +9,9 @@ import tsec.cipher._
 import tsec.cipher.symmetric._
 import tsec.common.ManagedRandom
 import tsec.keygen.symmetric.SymmetricKeyGen
+
+import java.security.MessageDigest
+import java.util
 
 /** A trait to help factor out the ChaCha20 construction
   * common code.
