@@ -18,6 +18,7 @@ object OSUtil {
     osName.startsWith("macosx") || osName.startsWith("osx")
   }
 
+  // TODO: For supporting JDK 17+, we must eliminate deprecated `System.getSecurityManager` and `AccessController`.
   def getSystemProperty(key: String, default: String): String = {
     if (key == null) throw new NullPointerException("key")
     if (key.isEmpty) throw new IllegalArgumentException("key must not be empty.")
