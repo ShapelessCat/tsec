@@ -1,9 +1,5 @@
 package tsec
 
-import java.util.concurrent.TimeUnit
-import javax.crypto
-import javax.crypto.Cipher
-
 import cats.effect.IO
 import org.openjdk.jmh.annotations._
 import tsec.cipher.symmetric._
@@ -12,6 +8,10 @@ import tsec.cipher.symmetric.jca.{SecretKey, AES256GCM => JAESGCM}
 import tsec.cipher.symmetric.libsodium.{AES256GCM, CryptoSecretBox, SodiumKey, XChacha20AEAD}
 import tsec.common._
 import tsec.libsodium._
+
+import java.util.concurrent.TimeUnit
+import javax.crypto
+import javax.crypto.Cipher
 
 @State(Scope.Thread)
 @BenchmarkMode(Array(Mode.Throughput))

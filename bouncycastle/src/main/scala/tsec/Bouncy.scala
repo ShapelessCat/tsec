@@ -1,8 +1,8 @@
 package tsec
 
-import java.security.Security
-
 import org.bouncycastle.jce.provider.BouncyCastleProvider
+
+import java.security.Security
 
 trait Bouncy
 

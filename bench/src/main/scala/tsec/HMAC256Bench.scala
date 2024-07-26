@@ -1,7 +1,5 @@
 package tsec
 
-import java.util.concurrent.TimeUnit
-
 import cats.Id
 import cats.effect.IO
 import org.openjdk.jmh.annotations._
@@ -10,6 +8,7 @@ import tsec.libsodium.ScalaSodium
 import tsec.mac.jca._
 import tsec.mac.libsodium._
 
+import java.util.concurrent.TimeUnit
 import scala.util.Random
 
 @State(Scope.Thread)
