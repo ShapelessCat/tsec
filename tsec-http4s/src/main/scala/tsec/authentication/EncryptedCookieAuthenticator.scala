@@ -1,22 +1,21 @@
 package tsec.authentication
 
-import java.time.Instant
-import java.util.UUID
 import cats.data.OptionT
 import cats.effect.Sync
 import cats.syntax.all._
-import io.circe.Json
 import io.circe.parser.decode
 import io.circe.syntax._
-import io.circe.{Decoder, Encoder}
+import io.circe.{Decoder, Encoder, Json}
 import org.http4s._
-import tsec.cipher.symmetric.{IvGen, _}
 import tsec.cipher.symmetric.jca._
+import tsec.cipher.symmetric._
 import tsec.common._
 import tsec.cookies._
 import tsec.hashing.jca._
 import tsec.jwt.JWTPrinter
 
+import java.time.Instant
+import java.util.UUID
 import scala.concurrent.duration.FiniteDuration
 
 sealed abstract class EncryptedCookieAuthenticator[F[_]: Sync, I, V, A]

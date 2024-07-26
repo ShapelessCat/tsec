@@ -1,12 +1,11 @@
 package tsec.authentication
 
-import java.time.Instant
 import cats.data.OptionT
 import cats.effect.Sync
 import cats.instances.string._
 import cats.syntax.all._
 import io.circe.{Decoder, Encoder}
-import org.http4s.{Header, HttpDate, Request, Response, ResponseCookie}
+import org.http4s._
 import org.typelevel.ci.CIString
 import tsec.authentication.internal._
 import tsec.common._
@@ -14,6 +13,7 @@ import tsec.jws.mac._
 import tsec.jwt.algorithms.JWTMacAlgo
 import tsec.mac.jca.MacSigningKey
 
+import java.time.Instant
 import scala.concurrent.duration.FiniteDuration
 
 /**

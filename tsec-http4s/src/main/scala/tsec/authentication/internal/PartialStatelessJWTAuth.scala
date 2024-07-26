@@ -1,7 +1,5 @@
 package tsec.authentication.internal
 
-import java.time.Instant
-
 import cats.data.OptionT
 import cats.effect.Sync
 import cats.syntax.all._
@@ -16,6 +14,7 @@ import tsec.jwt.algorithms.JWTMacAlgo
 import tsec.jwt.{JWTClaims, JWTPrinter}
 import tsec.mac.jca._
 
+import java.time.Instant
 import scala.concurrent.duration._
 
 /** A JWT authenticator backed by a db copy,

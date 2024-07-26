@@ -1,13 +1,13 @@
 package tsec.authentication
 
-import java.time.Instant
-
 import cats.effect.IO
+import cats.effect.unsafe.implicits.global
 import tsec.cipher.symmetric._
 import tsec.cipher.symmetric.jca._
-import cats.effect.unsafe.implicits.global
 
-class EncryptedCookieAuthenticatorTests extends EncryptedCookieAuthenticatorSpec {
+import java.time.Instant
+
+final class EncryptedCookieAuthenticatorTests extends EncryptedCookieAuthenticatorSpec {
 
   AuthenticatorTest[AuthEncryptedCookie[AES128GCM, Int]](
     "AES128GCM Authenticator w\\ backing store",

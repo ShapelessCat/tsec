@@ -1,7 +1,5 @@
 package tsec.authentication
 
-import java.time.Instant
-
 import cats.data.OptionT
 import cats.effect.Sync
 import cats.syntax.all._
@@ -9,6 +7,7 @@ import org.http4s.headers.Authorization
 import org.http4s.{AuthScheme, Credentials, Request, Response}
 import tsec.common._
 
+import java.time.Instant
 import scala.concurrent.duration._
 
 sealed abstract class BearerTokenAuthenticator[F[_]: Sync, I, V] private[tsec] (

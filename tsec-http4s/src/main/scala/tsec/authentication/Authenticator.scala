@@ -1,11 +1,10 @@
 package tsec.authentication
 
-import java.time.Instant
-
 import cats.data.OptionT
 import cats.effect.Sync
 import org.http4s.{Request, Response}
 
+import java.time.Instant
 import scala.concurrent.duration.FiniteDuration
 
 /** A base typeclass for generating authenticators, i.e cookies, tokens, JWTs etc.

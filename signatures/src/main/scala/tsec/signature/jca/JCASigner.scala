@@ -1,9 +1,9 @@
 package tsec.signature.jca
 
 import cats.Monad
-import tsec.signature.{CertificateSigner, CryptoSignature}
-import cats.syntax.functor._
 import cats.syntax.flatMap._
+import cats.syntax.functor._
+import tsec.signature.{CertificateSigner, CryptoSignature}
 
 abstract class JCASigner[F[_]: Monad, A](
     algebra: JCASigAlgebra[F, A, SigPublicKey, SigPrivateKey, SigCertificate]

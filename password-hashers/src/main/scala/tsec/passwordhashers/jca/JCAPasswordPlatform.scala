@@ -1,7 +1,7 @@
 package tsec.passwordhashers.jca
 
 import cats.effect.Sync
-import tsec.passwordhashers.{IdPasswordHasher, PasswordHashAPI, PasswordHasher, _}
+import tsec.passwordhashers.{IdPasswordHasher, PasswordHash, PasswordHashAPI, PasswordHasher}
 
 trait JCAPasswordPlatform[A] extends PasswordHashAPI[A] {
 

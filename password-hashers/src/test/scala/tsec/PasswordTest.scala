@@ -1,14 +1,14 @@
 package tsec
 
-import java.security.MessageDigest
-
 import cats.Eq
 import cats.effect.IO
+import cats.effect.unsafe.implicits.global
 import org.scalacheck.{Arbitrary, Gen}
 import tsec.common._
 import tsec.passwordhashers.jca._
-import tsec.passwordhashers.{PasswordHashAPI, PasswordHasher, _}
-import cats.effect.unsafe.implicits.global
+import tsec.passwordhashers._
+
+import java.security.MessageDigest
 
 class PasswordTest extends TestSpec {
 
@@ -100,7 +100,7 @@ class PasswordTest extends TestSpec {
 
   testSpec[BCrypt]("BCrypt")(BCrypt)
 
-//  testSpec[HardenedSCrypt]("HardenedSCrypt") //Note: Takes _forever_
+  // testSpec[HardenedSCrypt]("HardenedSCrypt") // Note: Takes _forever_
 
   behavior of "BCrypt only variable rounds"
 

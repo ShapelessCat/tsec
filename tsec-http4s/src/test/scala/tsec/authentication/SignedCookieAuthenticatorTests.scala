@@ -1,18 +1,17 @@
 package tsec.authentication
 
-import java.time.Instant
-import java.util.UUID
-
 import cats.effect.IO
+import cats.effect.unsafe.implicits.global
 import org.http4s.{Request, RequestCookie}
 import tsec.keygen.symmetric.IdKeyGen
 import tsec.mac.MessageAuth
 import tsec.mac.jca._
 
+import java.time.Instant
+import java.util.UUID
 import scala.concurrent.duration._
-import cats.effect.unsafe.implicits.global
 
-class SignedCookieAuthenticatorTests extends RequestAuthenticatorSpec {
+final class SignedCookieAuthenticatorTests extends RequestAuthenticatorSpec {
 
   private val cookieName = "hi"
   implicit def cookieBackingStore[A]: BackingStore[IO, UUID, AuthenticatedCookie[A, Int]] =
@@ -23,9 +22,9 @@ class SignedCookieAuthenticatorTests extends RequestAuthenticatorSpec {
       store: BackingStore[IO, UUID, AuthenticatedCookie[A, Int]],
       M: MessageAuth[IO, A, MacSigningKey]
   ): AuthSpecTester[AuthenticatedCookie[A, Int]] = {
-    val dummyStore = dummyBackingStore[IO, Int, DummyUser](_.id)
+    val dummyStore: BackingStore[IO, Int, DummyUser] = dummyBackingStore[IO, Int, DummyUser](_.id)
     val authenticator = SignedCookieAuthenticator[IO, Int, DummyUser, A](
-      TSecCookieSettings(cookieName, false, expiryDuration = 10.minutes, maxIdle = Some(10.minutes)),
+      TSecCookieSettings(cookieName, secure = false, expiryDuration = 10.minutes, maxIdle = Some(10.minutes)),
       store,
       dummyStore,
       keyGenerator.generateKey
@@ -51,7 +50,7 @@ class SignedCookieAuthenticatorTests extends RequestAuthenticatorSpec {
 
       def wrongKeyAuthenticator: IO[AuthenticatedCookie[A, Int]] =
         SignedCookieAuthenticator[IO, Int, DummyUser, A](
-          TSecCookieSettings(cookieName, false, expiryDuration = 10.minutes, maxIdle = Some(10.minutes)),
+          TSecCookieSettings(cookieName, secure = false, expiryDuration = 10.minutes, maxIdle = Some(10.minutes)),
           store,
           dummyStore,
           keyGenerator.generateKey
@@ -59,10 +58,10 @@ class SignedCookieAuthenticatorTests extends RequestAuthenticatorSpec {
     }
   }
 
-  def CookieAuthTest[A](string: String, auth: AuthSpecTester[AuthenticatedCookie[A, Int]]) =
+  def CookieAuthTest[A](string: String, auth: AuthSpecTester[AuthenticatedCookie[A, Int]]): Unit =
     AuthenticatorTest[AuthenticatedCookie[A, Int]](string, auth)
 
-  def CookieReqTest[A](string: String, auth: AuthSpecTester[AuthenticatedCookie[A, Int]]) =
+  def CookieReqTest[A](string: String, auth: AuthSpecTester[AuthenticatedCookie[A, Int]]): Unit =
     requestAuthTests[AuthenticatedCookie[A, Int]](string, auth)
 
   CookieAuthTest[HMACSHA1]("HMACSHA1 Authenticator", genAuthenticator[HMACSHA1])
@@ -77,7 +76,7 @@ class SignedCookieAuthenticatorTests extends RequestAuthenticatorSpec {
 
   def signedCookieTests[A](
       auth: AuthSpecTester[AuthenticatedCookie[A, Int]]
-  )(implicit M: MessageAuth[IO, A, MacSigningKey]) = {
+  )(implicit M: MessageAuth[IO, A, MacSigningKey]): Unit = {
 
     behavior of "Signed Cookie Authenticator " + M.algorithm
 

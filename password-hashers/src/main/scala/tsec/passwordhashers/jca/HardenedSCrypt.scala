@@ -1,6 +1,6 @@
 package tsec.passwordhashers.jca
 
-import tsec.passwordhashers._
+import tsec.passwordhashers.PasswordHash
 
 sealed trait HardenedSCrypt
 

@@ -2,7 +2,7 @@ package tsec.authentication
 
 import cats.data.OptionT
 import cats.effect.IO
-import cats.syntax.either._
+import cats.effect.unsafe.implicits.global
 import io.circe.Json
 import io.circe.generic.auto._
 import io.circe.syntax._
@@ -10,7 +10,6 @@ import org.http4s._
 import org.http4s.circe._
 import org.http4s.dsl.io._
 import tsec.authorization.BasicRBAC
-import cats.effect.unsafe.implicits.global
 
 class RequestAuthenticatorSpec extends AuthenticatorSpec {
 
@@ -22,7 +21,7 @@ class RequestAuthenticatorSpec extends AuthenticatorSpec {
 
     val requestAuth = SecuredRequestHandler(authSpec.auth)
 
-    //Add bob to the db
+    // Add bob to the db
     authSpec.dummyStore.put(dummyBob).unsafeRunSync()
 
     val onlyAdmins = BasicRBAC[IO, DummyRole, DummyUser, A](DummyRole.Admin)
@@ -132,7 +131,7 @@ class RequestAuthenticatorSpec extends AuthenticatorSpec {
         .unsafeRunSync() mustBe Status.Unauthorized
     }
 
-    //note: we feed it "discarded" because stateless tokens rely on this.
+    // Note: we feed it "discarded" because stateless tokens rely on this.
     it should "Fail on a discarded token" in {
       val response: OptionT[IO, Response[IO]] = for {
         auth      <- OptionT.liftF(requestAuth.authenticator.create(dummyBob.id))

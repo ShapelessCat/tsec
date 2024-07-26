@@ -1,7 +1,7 @@
 package tsec.authorization
 
-import cats.{Eq, MonadError}
 import cats.syntax.all._
+import cats.{Eq, MonadError}
 import io.circe.Decoder.Result
 import io.circe._
 import io.circe.syntax._

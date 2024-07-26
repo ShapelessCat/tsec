@@ -1,7 +1,8 @@
 package tsec.authorization
-import cats.{Eq, MonadError}
+
 import cats.data.OptionT
 import cats.syntax.all._
+import cats.{Eq, MonadError}
 import tsec.authentication.SecuredRequest
 
 /** A class modeling basic Discretionary access control.

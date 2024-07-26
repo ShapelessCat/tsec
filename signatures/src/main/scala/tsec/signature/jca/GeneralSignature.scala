@@ -1,8 +1,5 @@
 package tsec.signature.jca
 
-import java.security.spec._
-import java.security.{KeyFactory, KeyPairGenerator}
-
 import cats.Id
 import cats.effect.Sync
 import cats.instances.either._
@@ -12,6 +9,9 @@ import org.bouncycastle.jce.spec.ECNamedCurveSpec
 import tsec.Bouncy
 import tsec.common.ErrorConstruct._
 import tsec.signature.CertSignatureAPI
+
+import java.security.spec._
+import java.security.{KeyFactory, KeyPairGenerator}
 
 abstract class GeneralSignature[A](sigAlgo: String, kfAlgo: String)
     extends KFTag[A]
@@ -378,7 +378,7 @@ abstract class ECDSASignature[A](sigAlgo: String, dCurve: String, outLen: Int)
 
 }
 
-//Todo: abstraction over bouncy presence
+// TODO: abstraction over bouncy presence
 object ECDSASignature {
   val Provider = "BC"
 }

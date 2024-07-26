@@ -1,11 +1,11 @@
 package tsec.passwordhashers.jca
 
-import java.security.MessageDigest
-
 import cats.syntax.either._
 import com.lambdaworks.codec.Base64
 import com.lambdaworks.crypto.{SCrypt => JSCrypt}
 import tsec.common.ManagedRandom
+
+import java.security.MessageDigest
 
 /** SCrypt util scala adaption for Will Glozer's (@wg on github) SCryptUtil,
   * improving on SHA1PRNGs, bad security in particular.

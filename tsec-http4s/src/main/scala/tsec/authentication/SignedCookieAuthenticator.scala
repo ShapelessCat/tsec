@@ -1,8 +1,5 @@
 package tsec.authentication
 
-import java.time.Instant
-import java.util.UUID
-
 import cats.data.OptionT
 import cats.effect.Sync
 import cats.syntax.all._
@@ -13,6 +10,8 @@ import tsec.hashing.jca._
 import tsec.mac.MessageAuth
 import tsec.mac.jca._
 
+import java.time.Instant
+import java.util.UUID
 import scala.concurrent.duration.FiniteDuration
 
 abstract class SignedCookieAuthenticator[F[_], I, V, A] private[tsec] (

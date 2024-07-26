@@ -1,19 +1,20 @@
 package tsec
 
-import java.util.UUID
-
+import cats.instances.either._
 import org.scalacheck.{Arbitrary, Gen}
 import tsec.cookies.CookieSigner
-import tsec.mac.jca._
-import cats.instances.either._
-import cats.syntax.either._
 import tsec.mac.MessageAuth
+import tsec.mac.jca._
 
-class CookieSignerTests extends TestSpec {
+import java.util.UUID
+
+final class CookieSignerTests extends TestSpec {
 
   implicit val arbitraryUUID: Arbitrary[UUID] = Arbitrary.apply(Gen.uuid)
 
-  def signerTests[A](implicit M: MessageAuth[MacErrorM, A, MacSigningKey], keyGen: MacKeyGen[MacErrorM, A]) = {
+  private def signerTests[A](
+    implicit M: MessageAuth[MacErrorM, A, MacSigningKey], keyGen: MacKeyGen[MacErrorM, A]
+  ): Unit = {
     behavior of "CookieSigner for algo " + M.algorithm
 
     it should "Sign and verify any cookie properly with coercion" in {

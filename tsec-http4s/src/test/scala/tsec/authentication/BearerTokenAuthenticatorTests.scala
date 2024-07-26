@@ -1,12 +1,11 @@
 package tsec.authentication
 
-import java.time.Instant
-
 import cats.effect.IO
 import org.http4s.headers.Authorization
 import org.http4s.{AuthScheme, Credentials, Request}
 import tsec.common.SecureRandomId
 
+import java.time.Instant
 import scala.concurrent.duration._
 
 class BearerTokenAuthenticatorTests extends RequestAuthenticatorSpec {

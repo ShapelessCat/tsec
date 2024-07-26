@@ -1,7 +1,5 @@
 package tsec.authentication.internal
 
-import java.time.Instant
-
 import cats.data.OptionT
 import cats.effect.Sync
 import cats.syntax.all._
@@ -11,11 +9,12 @@ import org.http4s._
 import tsec.authentication._
 import tsec.common._
 import tsec.jws.mac._
-import tsec.jwt.algorithms.JWTMacAlgo
 import tsec.jwt.JWTClaims
+import tsec.jwt.algorithms.JWTMacAlgo
 import tsec.mac.MAC
 import tsec.mac.jca._
 
+import java.time.Instant
 import scala.concurrent.duration._
 
 private[tsec] abstract class StatelessJWTAuth[F[_], V: Decoder: Encoder.AsObject, A: JWTMacAlgo](

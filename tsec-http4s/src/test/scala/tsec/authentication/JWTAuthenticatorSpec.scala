@@ -1,7 +1,5 @@
 package tsec.authentication
 
-import java.time.Instant
-
 import cats.effect.IO
 import org.http4s.{Header, Request, RequestCookie, SameSite}
 import org.typelevel.ci.CIString
@@ -11,8 +9,8 @@ import tsec.jwt.algorithms.JWTMacAlgo
 import tsec.keygen.symmetric.IdKeyGen
 import tsec.mac.jca._
 
+import java.time.Instant
 import scala.concurrent.duration._
-import cats.effect.unsafe.implicits.global
 
 class JWTAuthenticatorSpec extends RequestAuthenticatorSpec {
 
@@ -33,8 +31,8 @@ class JWTAuthenticatorSpec extends RequestAuthenticatorSpec {
   val generalCookieSettings =
     TSecCookieSettings(
       "hi",
-      false,
-      false,
+      secure = false,
+      httpOnly = false,
       None,
       None,
       SameSite.Lax,
@@ -46,8 +44,8 @@ class JWTAuthenticatorSpec extends RequestAuthenticatorSpec {
   val generalNoRollCookieSettings =
     TSecCookieSettings(
       "hi",
-      false,
-      false,
+      secure = false,
+      httpOnly = false,
       None,
       None,
       SameSite.Lax,
@@ -169,7 +167,6 @@ class JWTAuthenticatorSpec extends RequestAuthenticatorSpec {
   }
 
   /** Unencrypted stateless in bearer tests
-    *
     */
   def stateless[A: JWTMacAlgo](tf: StatelessAuth[A], embedder: StatelessEmbedder[A])(
       implicit cv: JWSMacCV[IO, A],

@@ -1,7 +1,6 @@
 package tsec.authentication
 
 import java.time.Instant
-
 import scala.concurrent.duration.FiniteDuration
 
 /** Authenticators represent something similar to a

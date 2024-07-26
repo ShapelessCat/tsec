@@ -1,22 +1,18 @@
 package tsec.authentication
 
-import java.time.Instant
-import java.util.UUID
 import cats.data.OptionT
 import cats.effect.IO
-import cats.syntax.either._
-import io.circe.generic.auto._
 import io.circe.parser.decode
 import org.http4s.headers.`Set-Cookie`
 import org.http4s.{Request, RequestCookie, Response}
+import tsec.cipher.symmetric.{AADEncryptor, IvGen}
 import tsec.cipher.symmetric.jca._
 import tsec.cookies.{AEADCookie, AEADCookieEncryptor}
 import tsec.keygen.symmetric.IdKeyGen
 
+import java.time.Instant
+import java.util.UUID
 import scala.concurrent.duration._
-import cats.effect.unsafe.implicits.global
-import tsec.cipher.symmetric.AADEncryptor
-import tsec.cipher.symmetric.IvGen
 
 class EncryptedCookieAuthenticatorSpec extends RequestAuthenticatorSpec {
 

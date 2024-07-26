@@ -1,9 +1,9 @@
 package tsec.signature.jca
 
-import java.security.Signature
-
 import cats.syntax.either._
 import tsec.common.ErrorConstruct._
+
+import java.security.Signature
 
 abstract class JCASigInterpreterImpure[A](algorithm: String)
     extends JCASigAlgebra[SigErrorM, A, SigPublicKey, SigPrivateKey, SigCertificate] {

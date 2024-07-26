@@ -9,7 +9,7 @@ import java.security.SecureRandom;
  * from original author Damien Miller <djm@mindrot.org>
  *
  * We use this implementation with the presumed assumption that
- * a user will use it _only_ through tsec. Thus it only
+ * a user will use it _only_ through tsec. Thus, it only
  * accepts one form of salt (The one generated through here),
  * and it does not expose a genSalt that doesn't
  * pass a SecureRandom (for speed). If you decide
@@ -18,7 +18,7 @@ import java.security.SecureRandom;
  * strings. This is for security purposes.
  *
  *
- * Again, this is not meant to be used outside of tsec,
+ * Again, this is not meant to be used outside tsec,
  * and it does _not_ support ARM which may have a different encoding
  * for the u\0000 char.
  *
@@ -696,4 +696,3 @@ public class JBCrypt {
         return ret == 0;
     }
 }
-

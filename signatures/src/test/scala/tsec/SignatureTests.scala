@@ -1,16 +1,16 @@
 package tsec
 
-import java.security.interfaces.{ECPublicKey, RSAPublicKey}
-
 import cats.effect.IO
+import cats.effect.unsafe.implicits.global
 import tsec.common._
 import tsec.signature.jca._
-import cats.effect.unsafe.implicits.global
 
-class SignatureTests extends TestSpec {
+import java.security.interfaces.{ECPublicKey, RSAPublicKey}
 
-  //Todo: Property check here
-  val toSign = "HItHERE!".utf8Bytes
+final class SignatureTests extends TestSpec {
+
+  // TODO: Property check here
+  private val toSign = "HItHERE!".utf8Bytes
 
   def sigIOTests[A](
       implicit interp: JCASigner[IO, A],

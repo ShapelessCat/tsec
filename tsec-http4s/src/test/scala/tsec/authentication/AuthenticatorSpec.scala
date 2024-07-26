@@ -1,18 +1,17 @@
 package tsec.authentication
 
-import cats.Applicative
-import cats.ApplicativeError
 import cats.data.OptionT
 import cats.effect.IO
-import cats.{Eq, MonadError}
-import cats.syntax.applicativeError._
+import cats.effect.unsafe.implicits.global
 import cats.instances.string._
+import cats.syntax.applicativeError._
+import cats.{Applicative, ApplicativeError, Eq, MonadError}
 import org.http4s._
 import org.scalacheck._
 import org.scalatest.BeforeAndAfterEach
 import tsec.TestSpec
 import tsec.authorization.{AuthGroup, AuthorizationInfo, SimpleAuthEnum}
-import cats.effect.unsafe.implicits.global
+
 import scala.collection.mutable
 
 sealed abstract case class DummyRole(repr: String)
@@ -80,7 +79,9 @@ abstract class AuthenticatorSpec extends TestSpec with BeforeAndAfterEach {
   def errorToNone[F[_]: Applicative, A](t: Throwable): OptionT[F, A] =
     OptionT.none[F, A]
 
-  def dummyBackingStore[F[_], I, V](getId: V => I)(implicit F: MonadError[F, Throwable]) = new BackingStore[F, I, V] {
+  def dummyBackingStore[F[_], I, V](getId: V => I)(
+    implicit F: MonadError[F, Throwable]
+  ): BackingStore[F, I, V] = new BackingStore[F, I, V] {
     val storageMap = mutable.HashMap.empty[I, V]
 
     def put(elem: V): F[V] = {
@@ -108,7 +109,7 @@ abstract class AuthenticatorSpec extends TestSpec with BeforeAndAfterEach {
 
   def AuthenticatorTest[A](title: String, authSpec: AuthSpecTester[A])(
       implicit AE: ApplicativeError[OptionT[IO, *], Throwable]
-  ) = {
+  ): Unit = {
     behavior of title
 
     it should "Create, embed and extract properly" in {
@@ -249,7 +250,7 @@ abstract class AuthenticatorSpec extends TestSpec with BeforeAndAfterEach {
 
   def StatelessAuthenticatorTest[A](title: String, authSpec: StatelessSpecTester[A])(
       implicit AE: ApplicativeError[OptionT[IO, *], Throwable]
-  ) = {
+  ): Unit = {
     behavior of title
 
     it should "Create, embed and extract properly" in {

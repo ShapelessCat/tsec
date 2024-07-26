@@ -1,8 +1,8 @@
 package tsec
 
-import cats.{Eq, MonadError}
 import cats.instances.string._
-import cats.syntax.either._
+import cats.{Eq, MonadError}
+import io.circe.Decoder.Result
 import io.circe.{Decoder, Encoder, HCursor, Json}
 import tsec.cipher.common.padding.NoPadding
 import tsec.cipher.symmetric._
@@ -42,7 +42,7 @@ package object cookies {
     }
 
     implicit def circeDecoder[A]: Decoder[AEADCookie[A]] = new Decoder[AEADCookie[A]] {
-      def apply(c: HCursor) = c.as[String].map(AEADCookie.apply[A])
+      def apply(c: HCursor): Result[AEADCookie[A]] = c.as[String].map(AEADCookie.apply[A])
     }
 
     implicit def circeEncoder[A]: Encoder[AEADCookie[A]] = new Encoder[AEADCookie[A]] {

@@ -1,11 +1,11 @@
 package tsec.passwordhashers.jca
 
-import java.nio.CharBuffer
-
 import cats.effect.Sync
 import tsec.common._
 import tsec.passwordhashers._
 import tsec.passwordhashers.jca.internal.JBCrypt
+
+import java.nio.CharBuffer
 
 sealed trait BCrypt
 
@@ -38,7 +38,7 @@ object BCrypt extends JCAPasswordPlatform[BCrypt] {
         val charbuffer = CharBuffer.wrap(p)
         val bytes      = defaultCharset.encode(charbuffer).array()
         val out        = PasswordHash[BCrypt](JBCrypt.hashpw(bytes, JBCryptUtil.genSalt(rounds)))
-        //Clear pass
+        // Clear pass
         ByteUtils.zeroCharArray(p)
         ByteUtils.zeroByteArray(bytes)
         out

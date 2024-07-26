@@ -2,6 +2,7 @@ package tsec.authentication
 
 import cats.data.OptionT
 import cats.effect.IO
+import cats.effect.unsafe.implicits.global
 import org.http4s._
 import org.http4s.dsl.io._
 import org.typelevel.ci.CIString
@@ -9,16 +10,15 @@ import tsec.TestSpec
 import tsec.csrf.{CSRFToken, TSecCSRF}
 import tsec.keygen.symmetric.IdKeyGen
 import tsec.mac.jca._
-import cats.effect.unsafe.implicits.global
 
 class CSRFSpec extends TestSpec {
 
   val dummyService: HttpRoutes[IO] = HttpRoutes.of[IO] {
     case GET -> Root =>
-      Thread.sleep(1) //Necessary to advance the clock
+      Thread.sleep(1) // Necessary to advance the clock
       Ok()
     case POST -> Root =>
-      Thread.sleep(1) //Necessary to advance the clock
+      Thread.sleep(1) // Necessary to advance the clock
       Ok()
   }
 
@@ -26,7 +26,7 @@ class CSRFSpec extends TestSpec {
   val passThroughRequest: Request[IO] = Request[IO]()
   val orElse: Response[IO]            = Response[IO](Status.Unauthorized)
 
-  def testCSRFWithMac[A](implicit mac: JCAMessageAuth[IO, A], keygen: IdKeyGen[A, MacSigningKey]) = {
+  def testCSRFWithMac[A](implicit mac: JCAMessageAuth[IO, A], keygen: IdKeyGen[A, MacSigningKey]): Unit = {
     behavior of s"CSRF signing using " + mac.algorithm
 
     val newKey   = keygen.generateKey

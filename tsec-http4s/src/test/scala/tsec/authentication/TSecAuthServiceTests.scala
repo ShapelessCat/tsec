@@ -1,15 +1,15 @@
 package tsec.authentication
 
-import java.time.Instant
-
 import cats.effect.IO
+import cats.effect.unsafe.implicits.global
 import cats.syntax.semigroupk._
 import org.http4s._
-import org.http4s.implicits._
 import org.http4s.dsl.io._
-import cats.effect.unsafe.implicits.global
+import org.http4s.implicits._
 
-class TSecAuthServiceTests extends AuthenticatorSpec {
+import java.time.Instant
+
+final class TSecAuthServiceTests extends AuthenticatorSpec {
 
   case class DummyAuthenticator(
       expiry: Instant = Instant.MIN,

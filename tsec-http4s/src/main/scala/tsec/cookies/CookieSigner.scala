@@ -1,10 +1,10 @@
 package tsec.cookies
 
 import cats.MonadError
-import tsec.common._
-import tsec.mac.{MessageAuth, _}
-import tsec.mac.jca._
 import cats.syntax.all._
+import tsec.common._
+import tsec.mac.jca._
+import tsec.mac._
 
 object CookieSigner {
 
@@ -57,7 +57,7 @@ object CookieSigner {
             case true  => SignedCookie.fromDecodedString(original.toUtf8String)
             case false => F.raiseError(MacVerificationError("Invalid cookie"))
           }
-      } match { //Micro opti. could be .fold
+      } match { // Micro opti. could be .fold
         case Some(a) => a
         case None    => F.raiseError(MacVerificationError("Invalid cookie"))
       }

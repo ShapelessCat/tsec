@@ -1,6 +1,7 @@
 package tsec.authentication
 
 import cats.effect.IO
+import cats.effect.unsafe.implicits.global
 import io.circe.generic.auto._
 import org.http4s.headers.Authorization
 import org.http4s.{AuthScheme, Credentials}
@@ -10,7 +11,6 @@ import tsec.jwt.algorithms.JWTMacAlgo
 import tsec.keygen.symmetric.IdKeyGen
 import tsec.mac.MessageAuth
 import tsec.mac.jca._
-import cats.effect.unsafe.implicits.global
 
 class JWTAuthenticatorTests extends JWTAuthenticatorSpec {
 
@@ -21,7 +21,7 @@ class JWTAuthenticatorTests extends JWTAuthenticatorSpec {
       implicit M: MessageAuth[IO, A, MacSigningKey],
       cv: JWSMacCV[IO, A],
       macKeyGen: IdKeyGen[A, MacSigningKey]
-  ) =
+  ): Unit =
     List[JWTTestingGroup[BackedAuth[A], Embedder[A]]](
       JWTTestingGroup(
         JWTAuthenticator.backed.inBearerToken[IO, Int, DummyUser, A](
@@ -85,16 +85,15 @@ class JWTAuthenticatorTests extends JWTAuthenticatorSpec {
         embedInHeader[Int, A](generalSettings.headerName),
         s"${M.algorithm} in header rolling"
       )
-    ).foreach {
-      case t =>
-        AuthenticatorTest[AugmentedJWT[A, Int]](
-          s"Authenticator Stateful spec: ${t.title}",
-          stateful[A](t.authenticator, t.embedder)
-        )
-        requestAuthTests[AugmentedJWT[A, Int]](
-          s"Request Auth Stateful spec: ${t.title}",
-          stateful[A](t.authenticator, t.embedder)
-        )
+    ).foreach { t =>
+      AuthenticatorTest[AugmentedJWT[A, Int]](
+        s"Authenticator Stateful spec: ${t.title}",
+        stateful[A](t.authenticator, t.embedder)
+      )
+      requestAuthTests[AugmentedJWT[A, Int]](
+        s"Request Auth Stateful spec: ${t.title}",
+        stateful[A](t.authenticator, t.embedder)
+      )
     }
 
   /** backed **/
@@ -102,7 +101,7 @@ class JWTAuthenticatorTests extends JWTAuthenticatorSpec {
       implicit M: MessageAuth[IO, A, MacSigningKey],
       cv: JWSMacCV[IO, A],
       macKeyGen: IdKeyGen[A, MacSigningKey]
-  ) =
+  ): Unit =
     List[JWTTestingGroup[UnBackedAuth[A], Embedder[A]]](
       JWTTestingGroup(
         JWTAuthenticator.unbacked.inBearerToken[IO, Int, DummyUser, A](
@@ -160,16 +159,15 @@ class JWTAuthenticatorTests extends JWTAuthenticatorSpec {
         embedInHeader[Int, A](generalSettings.headerName),
         s"${M.algorithm} in header rolling"
       )
-    ).foreach {
-      case t =>
-        AuthenticatorTest[AugmentedJWT[A, Int]](
-          s"Authenticator Partial Stateless spec: ${t.title}",
-          partialStateless[A](t.authenticator, t.embedder)
-        )
-        requestAuthTests[AugmentedJWT[A, Int]](
-          s"Request Auth Partial Stateless spec: ${t.title}",
-          partialStateless[A](t.authenticator, t.embedder)
-        )
+    ).foreach { t =>
+      AuthenticatorTest[AugmentedJWT[A, Int]](
+        s"Authenticator Partial Stateless spec: ${t.title}",
+        partialStateless[A](t.authenticator, t.embedder)
+      )
+      requestAuthTests[AugmentedJWT[A, Int]](
+        s"Request Auth Partial Stateless spec: ${t.title}",
+        partialStateless[A](t.authenticator, t.embedder)
+      )
     }
 
   /** backed **/
@@ -177,7 +175,7 @@ class JWTAuthenticatorTests extends JWTAuthenticatorSpec {
       implicit M: MessageAuth[IO, A, MacSigningKey],
       cv: JWSMacCV[IO, A],
       macKeyGen: IdKeyGen[A, MacSigningKey]
-  ) =
+  ): Unit =
     List[JWTTestingGroup[StatelessAuth[A], StatelessEmbedder[A]]](
       JWTTestingGroup(
         JWTAuthenticator.pstateless.inBearerToken[IO, DummyUser, A](
@@ -245,7 +243,7 @@ class JWTAuthenticatorTests extends JWTAuthenticatorSpec {
       implicit M: MessageAuth[IO, A, MacSigningKey],
       cv: JWSMacCV[IO, A],
       macKeyGen: MacKeyGen[IO, A]
-  ) = {
+  ): Unit = {
     behavior of M.algorithm + " JWT Token64 check"
     macKeyGen.generateKey
       .map { key =>
