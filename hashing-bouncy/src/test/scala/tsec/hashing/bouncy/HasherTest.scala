@@ -1,16 +1,16 @@
 package tsec.hashing.bouncy
 
-import java.security.MessageDigest
-
 import cats.Id
 import cats.effect.IO
+import cats.effect.unsafe.implicits.global
 import fs2._
 import tsec.TestSpec
 import tsec.common._
-import tsec.hashing.{CryptoHashAPI, CryptoHasher}
-import cats.effect.unsafe.implicits.global
+import tsec.hashing.CryptoHasher
 
-class HasherTest extends TestSpec {
+import java.security.MessageDigest
+
+final class HasherTest extends TestSpec {
   val str     = "hello World"
   val strList = List("a", "a", "bcd")
 

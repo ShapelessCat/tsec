@@ -1,7 +1,6 @@
 package tsec.jwt
 
 import io.circe._
-import cats.implicits._
 
 package object header {
 

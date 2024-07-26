@@ -1,14 +1,14 @@
 package tsec
 
-import java.security.MessageDigest
-
-import cats.effect.IO
 import cats.Id
+import cats.effect.IO
+import cats.effect.unsafe.implicits.global
 import fs2._
 import tsec.common._
 import tsec.hashing._
 import tsec.hashing.jca._
-import cats.effect.unsafe.implicits.global
+
+import java.security.MessageDigest
 
 class HasherTest extends TestSpec {
 

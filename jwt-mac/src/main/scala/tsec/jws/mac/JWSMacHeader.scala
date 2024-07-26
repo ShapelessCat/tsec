@@ -1,7 +1,6 @@
 package tsec.jws.mac
 
 import cats.data.NonEmptyList
-import cats.syntax.either._
 import io.circe._
 import io.circe.syntax._
 import tsec.common._
@@ -23,7 +22,7 @@ import tsec.jwt.header.JWTtyp
 sealed abstract case class JWSMacHeader[A](
     `type`: Option[JWTtyp] = Some(JWTtyp), //Type, which will almost always default to "JWT"
     contentType: Option[String] = None, // Optional header, preferably not used
-    critical: Option[NonEmptyList[String]] = None //Headers not to ignore, they must be understood by the JWT implementation
+    critical: Option[NonEmptyList[String]] = None // Headers not to ignore, they must be understood by the JWT implementation
 )(implicit val algorithm: JWTMacAlgo[A])
     extends JWSHeader[A] {
   def toJsonString: String = jwt.JWTPrinter.print(this.asJson)

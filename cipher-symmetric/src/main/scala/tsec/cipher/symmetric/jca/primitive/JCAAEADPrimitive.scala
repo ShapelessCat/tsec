@@ -1,14 +1,13 @@
 package tsec.cipher.symmetric.jca.primitive
 
-import java.util.{Arrays => JaRule}
-import javax.crypto.{Cipher => JCipher}
-
 import cats.MonadError
 import cats.effect.Sync
-import cats.syntax.all._
 import tsec.cipher.common.padding.SymmetricPadding
 import tsec.cipher.symmetric._
 import tsec.cipher.symmetric.jca._
+
+import java.util.{Arrays => JaRule}
+import javax.crypto.{Cipher => JCipher}
 
 sealed abstract class JCAAEADPrimitive[F[_], A, M, P](
     implicit algoTag: BlockCipher[A],
@@ -75,7 +74,7 @@ sealed abstract class JCAAEADPrimitive[F[_], A, M, P](
       catchF {
         val instance = getInstance
         ivProcess.decryptInit(instance, cipherText.nonce, key.toJavaKey)
-        //Re-combine the auth tag and the ciphertext, because thx JCA
+        // Re-combine the auth tag and the ciphertext, because thx JCA
         val combined = new Array[Byte](aead.tagSizeBytes + cipherText.content.length)
         System.arraycopy(cipherText.content, 0, combined, 0, cipherText.content.length)
         System.arraycopy(tag, 0, combined, cipherText.content.length, tag.length)
@@ -108,7 +107,7 @@ sealed abstract class JCAAEADPrimitive[F[_], A, M, P](
         val instance = getInstance
         ivProcess.decryptInit(instance, cipherText.nonce, key.toJavaKey)
 
-        //Re-combine the auth tag and the ciphertext, because thx JCA
+        // Re-combine the auth tag and the ciphertext, because thx JCA
         val combined = new Array[Byte](aead.tagSizeBytes + cipherText.content.length)
         System.arraycopy(cipherText.content, 0, combined, 0, cipherText.content.length)
         System.arraycopy(tag, 0, combined, cipherText.content.length, tag.length)

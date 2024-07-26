@@ -1,7 +1,5 @@
 package tsec.jws.signature
 
-import java.time.Instant
-
 import cats.effect.Sync
 import cats.syntax.all._
 import tsec.common._
@@ -10,6 +8,8 @@ import tsec.jwt.JWTClaims
 import tsec.jwt.algorithms.JWTSigAlgo
 import tsec.signature._
 import tsec.signature.jca._
+
+import java.time.Instant
 
 case class JWTSig[A](header: JWSSignedHeader[A], body: JWTClaims, signature: CryptoSignature[A])
     extends JWSJWT[A, CryptoSignature] {

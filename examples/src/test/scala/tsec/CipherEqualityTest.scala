@@ -1,25 +1,23 @@
 package tsec
 
 import cats.effect.IO
-import org.scalatest.matchers.must.Matchers._
-import tsec.common._
 import tsec.cipher.symmetric._
 import tsec.cipher.symmetric.bouncy._
-import tsec.cipher.symmetric.libsodium.{SodiumKey, CryptoSecretBox => SodiumSalsa, OriginalChacha20}
-import tsec.cipher.symmetric.libsodium.{XChacha20AEAD => SodiumXChaCha, IETFChacha20}
+import tsec.cipher.symmetric.libsodium.{IETFChacha20, OriginalChacha20, SodiumKey, CryptoSecretBox => SodiumSalsa, XChacha20AEAD => SodiumXChaCha}
+import tsec.common._
 import tsec.libsodium.ScalaSodium
 
-class CipherEqualityTest extends TestSpec {
+final class CipherEqualityTest extends TestSpec {
 
   /** These are all libsodium test vectors **/
-  val fixedPTRaw = "Ladies and Gentlemen of the class of '99: If I could offer you only one " +
+  private final val fixedPTRaw = "Ladies and Gentlemen of the class of '99: If I could offer you only one " +
     "tip for the future, sunscreen would be it."
-  val fixedPT   = PlainText(fixedPTRaw.utf8Bytes)
-  val fixedAAD  = AAD("50515253c0c1c2c3c4c5c6c7".hexBytesUnsafe)
-  val fixedIv24 = "07000000404142434445464748494a4b0000000000000000".hexBytesUnsafe
-  val fixedIv8  = "0700000040414243".hexBytesUnsafe
-  val fixedIv12 = "070000004041424344454647".hexBytesUnsafe
-  val fixedKey  = "808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9f".hexBytesUnsafe
+  private val fixedPT   = PlainText(fixedPTRaw.utf8Bytes)
+  private val fixedAAD  = AAD("50515253c0c1c2c3c4c5c6c7".hexBytesUnsafe)
+  private val fixedIv24 = "07000000404142434445464748494a4b0000000000000000".hexBytesUnsafe
+  private val fixedIv8  = "0700000040414243".hexBytesUnsafe
+  private val fixedIv12 = "070000004041424344454647".hexBytesUnsafe
+  private val fixedKey  = "808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9f".hexBytesUnsafe
 
   def AuthEncryptorTest[C1, C2](testName: String)(
       implicit LSEncryptor: AuthEncryptor[IO, C1, SodiumKey],

@@ -62,7 +62,7 @@ class JCASymmetricSpec extends TestSpec {
           encrypted <- algebra.encrypt[IO](testPlainText, key1)
           decrypted <- algebra.decrypt[IO](encrypted, key2)
         } yield decrypted.toUtf8String
-        if (!testMessage.isEmpty)
+        if (testMessage.nonEmpty)
           testEncryptionDecryption.attempt.unsafeRunSync() mustNot equal(Right(testMessage))
       }
     }
@@ -143,7 +143,7 @@ class JCASymmetricSpec extends TestSpec {
           encrypted <- algebra.encrypt[IO](testPlainText, key1)
           decrypted <- algebra.decrypt[IO](encrypted, key2)
         } yield decrypted.toUtf8String
-        if (!testMessage.isEmpty)
+        if (testMessage.nonEmpty)
           testEncryptionDecryption.attempt.unsafeRunSync() mustNot equal(Right(testMessage))
       }
     }
@@ -158,7 +158,7 @@ class JCASymmetricSpec extends TestSpec {
           encrypted <- algebra.encryptWithAAD[IO](testPlainText, key1, aad1)
           decrypted <- algebra.decryptWithAAD[IO](encrypted, key1, aad2)
         } yield decrypted.toUtf8String
-        if (!testMessage.isEmpty && !AAD1.isEmpty && !AAD2.isEmpty)
+        if (testMessage.nonEmpty && AAD1.nonEmpty && AAD2.nonEmpty)
           testEncryptionDecryption.attempt.unsafeRunSync() mustNot equal(Right(testMessage))
       }
     }
@@ -212,7 +212,7 @@ class JCASymmetricSpec extends TestSpec {
           encrypted <- algebra.encryptDetached[IO](testPlainText, key1)
           decrypted <- algebra.decryptDetached[IO](encrypted._1, key2, encrypted._2)
         } yield decrypted.toUtf8String
-        if (!testMessage.isEmpty)
+        if (testMessage.nonEmpty)
           testEncryptionDecryption.attempt.unsafeRunSync() mustNot equal(Right(testMessage))
       }
     }
@@ -227,7 +227,7 @@ class JCASymmetricSpec extends TestSpec {
           encrypted <- algebra.encryptWithAADDetached[IO](testPlainText, key1, aad1)
           decrypted <- algebra.decryptWithAADDetached[IO](encrypted._1, key1, aad2, encrypted._2)
         } yield decrypted.toUtf8String
-        if (!testMessage.isEmpty && !AAD1.isEmpty && !AAD2.isEmpty)
+        if (testMessage.nonEmpty && AAD1.nonEmpty && AAD2.nonEmpty)
           testEncryptionDecryption.attempt.unsafeRunSync() mustNot equal(Right(testMessage))
       }
     }

@@ -1,4 +1,3 @@
-
 object JWTSignatureExamples {
 
   import cats.effect.Sync

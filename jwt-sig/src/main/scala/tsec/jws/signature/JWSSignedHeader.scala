@@ -1,7 +1,6 @@
 package tsec.jws.signature
 
 import cats.data.NonEmptyList
-import cats.syntax.either._
 import io.circe._
 import io.circe.syntax._
 import tsec.common._
@@ -9,20 +8,20 @@ import tsec.hashing._
 import tsec.hashing.jca._
 import tsec.jws._
 import tsec.jws.header.JWSHeader
-import tsec.{hashing, jwt}
+import tsec.jwt
 import tsec.jwt.algorithms._
 import tsec.jwt.header._
 
 case class JWSSignedHeader[A](
-    `type`: Option[JWTtyp] = Some(JWTtyp), //Type, which will almost always default to "JWT"
+    `type`: Option[JWTtyp] = Some(JWTtyp), // Type, which will almost always default to "JWT"
     contentType: Option[String] = None, // Optional header, preferably not used
-    critical: Option[NonEmptyList[String]] = None, //Headers not to ignore, they must be understood by the JWT implementation
-    jku: Option[String] = None, //Resource set for JWK
-    jwk: Option[String] = None, //JWK
-    kid: Option[String] = None, //JWK key hint
-    x5u: Option[String] = None, //The "x5c" (X.509 certificate chain) Header Parameter
-    x5t: Option[CryptoHash[SHA1]] = None, //sha1 hash
-    `x5t#S256`: Option[CryptoHash[SHA256]] = None //sha256 hash
+    critical: Option[NonEmptyList[String]] = None, // Headers not to ignore, they must be understood by the JWT implementation
+    jku: Option[String] = None, // Resource set for JWK
+    jwk: Option[String] = None, // JWK
+    kid: Option[String] = None, // JWK key hint
+    x5u: Option[String] = None, // The "x5c" (X.509 certificate chain) Header Parameter
+    x5t: Option[CryptoHash[SHA1]] = None, // sha1 hash
+    `x5t#S256`: Option[CryptoHash[SHA256]] = None // sha256 hash
 )(implicit val algorithm: JWTSigAlgo[A])
     extends JWSHeader[A]
 

@@ -1,17 +1,15 @@
 package tsec
 
-import java.security.Security
-import java.time.Instant
-
 import cats.effect.IO
-import cats.syntax.either._
+import cats.effect.unsafe.implicits.global
 import org.bouncycastle.jce.provider.BouncyCastleProvider
-import org.scalatest.matchers.must.Matchers
 import tsec.jws.signature._
 import tsec.jwt.JWTClaims
 import tsec.jwt.algorithms.JWTSigAlgo
 import tsec.signature.jca._
-import cats.effect.unsafe.implicits.global
+
+import java.security.Security
+import java.time.Instant
 
 class JWTSigTests extends TestSpec {
 
@@ -24,7 +22,7 @@ class JWTSigTests extends TestSpec {
       kfSigError: JCASigKG[SigErrorM, A],
       cv: JWSSigCV[IO, A],
       cv2: JWSSigCV[SigErrorM, A]
-  ) = {
+  ): Unit = {
     behavior of s"JWT signature-style ${algoTag.jwtRepr} - pure"
 
     it should "Sign and verify properly for proper params" in {

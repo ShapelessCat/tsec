@@ -1,24 +1,22 @@
 package tsec
 
-import java.time.Instant
-
 import cats.effect.IO
-import cats.syntax.either._
+import cats.effect.unsafe.implicits.global
 import tsec.common._
 import tsec.jws.JWSSerializer
 import tsec.jws.mac._
 import tsec.jwt.JWTClaims
 import tsec.jwt.algorithms.JWTMacAlgo
 import tsec.mac.jca._
-import cats.effect.unsafe.implicits.global
 
+import java.time.Instant
 import scala.concurrent.duration._
 
 class JWTMacTests extends TestSpec {
 
   def jwtBehavior[A](
       implicit algo: JWTMacAlgo[A],
-      cv: JWSMacCV[({type F[A] = Either[Throwable, A]})#F, A],
+      cv: JWSMacCV[Either[Throwable, *], A],
       cv2: JWSMacCV[IO, A],
       hs: JWSSerializer[JWSMacHeader[A]],
       keyGen: MacKeyGen[IO, A],

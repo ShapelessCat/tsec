@@ -1,11 +1,11 @@
 package tsec.cipher.symmetric.jca
 
-import java.util.concurrent.atomic.AtomicInteger
-
 import cats.effect.Sync
 import tsec.cipher.common.padding.NoPadding
 import tsec.cipher.symmetric._
 import tsec.cipher.symmetric.jca.primitive.JCAAEADPrimitive
+
+import java.util.concurrent.atomic.AtomicInteger
 
 sealed abstract class AESGCM[A] extends JCAAEAD[A, GCM, NoPadding] with AES[A] with JCAKeyGen[A] {
   implicit val ae: AESGCM[A] = this

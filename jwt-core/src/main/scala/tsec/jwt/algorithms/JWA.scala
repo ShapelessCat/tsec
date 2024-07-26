@@ -80,7 +80,7 @@ object JWTSigAlgo {
   type MT[F[_]] = MonadError[F, Throwable]
   def fromString[A](alg: String)(implicit o: JWTSigAlgo[A]): Option[JWTSigAlgo[A]] = alg match {
     case o.jwtRepr => Some(o)
-    //While we work on signatures, this can be none.
+    // While we work on signatures, this can be none.
     case _ => None
   }
 }
@@ -88,7 +88,7 @@ object JWTSigAlgo {
 object JWTMacAlgo {
   def fromString[A](alg: String)(implicit o: JWTMacAlgo[A]): Option[JWTMacAlgo[A]] = alg match {
     case o.jwtRepr => Some(o)
-    //While we work on signatures, this can be none.
+    // While we work on signatures, this can be none.
     case _ => None
   }
 }

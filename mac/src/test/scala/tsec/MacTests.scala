@@ -1,12 +1,12 @@
 package tsec
 
-import java.security.MessageDigest
-
 import cats.effect.IO
+import cats.effect.unsafe.implicits.global
 import tsec.common._
 import tsec.keygen.symmetric.SymmetricKeyGen
 import tsec.mac.jca._
-import cats.effect.unsafe.implicits.global
+
+import java.security.MessageDigest
 
 class MacTests extends TestSpec {
 

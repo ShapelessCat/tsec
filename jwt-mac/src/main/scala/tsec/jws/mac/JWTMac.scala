@@ -1,7 +1,5 @@
 package tsec.jws.mac
 
-import java.time.Instant
-
 import cats.Eq
 import cats.effect.Sync
 import cats.syntax.all._
@@ -12,14 +10,16 @@ import tsec.jwt.algorithms.JWTMacAlgo
 import tsec.mac._
 import tsec.mac.jca.{MacErrorM, MacSigningKey}
 
+import java.time.Instant
+
 sealed abstract case class JWTMac[A](header: JWSMacHeader[A], body: JWTClaims, signature: MAC[A])
     extends JWSJWT[A, MAC] {
   def toEncodedString(implicit hs: JWSSerializer[JWSMacHeader[A]]): String =
     hs.toB64URL(header) + "." + JWTClaims.toB64URL(body) + "." + signature.toB64UrlString
 
-  def id = body.jwtId
+  def id: Option[String] = body.jwtId
 
-  def ==(other: JWTMac[A]) =
+  def ==(other: JWTMac[A]): Boolean =
     header == other.header &&
       body == other.body &&
       signature.toB64String == other.signature.toB64String

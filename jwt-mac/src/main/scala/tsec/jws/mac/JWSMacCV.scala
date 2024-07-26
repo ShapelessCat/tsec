@@ -1,16 +1,16 @@
 package tsec.jws.mac
 
-import java.security.MessageDigest
-import java.time.Instant
-
 import cats.MonadError
 import cats.effect.Sync
 import cats.implicits._
 import tsec.common._
 import tsec.jws._
 import tsec.jwt.JWTClaims
-import tsec.mac.{MessageAuth, _}
 import tsec.mac.jca._
+import tsec.mac._
+
+import java.security.MessageDigest
+import java.time.Instant
 
 /** Our JWS Compressor, Signer and verifier (CV = Compressor and Verifier)
   *
@@ -141,6 +141,6 @@ object JWSMacCV {
       implicit hs: JWSSerializer[JWSMacHeader[A]],
       messageAuth: MessageAuth[MacErrorM, A, MacSigningKey]
   ): JWSMacCV[MacErrorM, A] =
-    new JWSMacCV[({type F[A] = Either[Throwable, A]})#F, A]() {}
+    new JWSMacCV[Either[Throwable, *], A]() {}
 
 }

@@ -1,15 +1,15 @@
 package tsec.jws.signature
 
-import java.time.Instant
-
 import cats.effect.Sync
+import cats.syntax.flatMap._
+import tsec.common._
+import tsec.jws.JWSSerializer
 import tsec.jwt.JWTClaims
 import tsec.jwt.algorithms.JWTSigAlgo
 import tsec.signature.CryptoSignature
 import tsec.signature.jca.{SigCertificate, SigErrorM, SigPublicKey}
-import cats.syntax.flatMap._
-import tsec.jws.JWSSerializer
-import tsec.common._
+
+import java.time.Instant
 
 final case class UnverifiedJWTSig[A: JWTSigAlgo](
     header: JWSSignedHeader[A],

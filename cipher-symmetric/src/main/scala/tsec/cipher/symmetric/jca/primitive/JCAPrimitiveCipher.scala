@@ -1,13 +1,12 @@
 package tsec.cipher.symmetric.jca.primitive
 
-import javax.crypto.{Cipher => JCipher}
-
 import cats.MonadError
 import cats.effect.Sync
-import cats.syntax.all._
 import tsec.cipher.common.padding.SymmetricPadding
-import tsec.cipher.symmetric.{Encryptor, _}
 import tsec.cipher.symmetric.jca.{IvProcess, SecretKey}
+import tsec.cipher.symmetric._
+
+import javax.crypto.{Cipher => JCipher}
 
 sealed abstract class JCAPrimitiveCipher[F[_], C, M, P](
     implicit algoTag: BlockCipher[C],

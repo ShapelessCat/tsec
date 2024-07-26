@@ -1,12 +1,12 @@
 package tsec.cipher.symmetric.jca
 
-import javax.crypto.spec.SecretKeySpec
-import javax.crypto.{KeyGenerator => KG}
-
 import cats.Id
 import cats.effect.Sync
 import tsec.cipher.symmetric._
 import tsec.keygen.symmetric._
+
+import javax.crypto.spec.SecretKeySpec
+import javax.crypto.{KeyGenerator => KG}
 
 /** A Helper type for providing implicit evidence that some type
   * A represents AES.

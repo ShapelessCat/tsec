@@ -1,21 +1,20 @@
 package tsec
 
-import io.circe.{Printer, _}
-import io.circe.syntax._
-import cats.implicits._
 import io.circe.Decoder.Result
+import io.circe._
+import io.circe.syntax._
 
 package object jwt {
-  val JWTPrinter = Printer(true, "")
+  val JWTPrinter: Printer = Printer(dropNullValues=true, "")
 
   sealed trait JWTAudience {
     def toList: List[String]
   }
   case class JWTSingleAudience(value: String) extends JWTAudience {
-    def toList = List(value)
+    def toList: List[String] = List(value)
   }
   case class JWTListAudience(values: List[String]) extends JWTAudience {
-    def toList = values
+    def toList: List[String] = values
   }
 
   implicit val audienceDecoder: Decoder[JWTAudience] = new Decoder[JWTAudience] {

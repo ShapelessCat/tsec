@@ -1,13 +1,14 @@
 package tsec.mac.jca
 
-import javax.crypto.{KeyGenerator, Mac, SecretKey}
-import javax.crypto.spec.SecretKeySpec
 import cats.Id
 import cats.effect.Sync
 import cats.instances.either._
 import cats.syntax.either._
 import tsec.keygen.symmetric.{IdKeyGen, SymmetricKeyGen}
 import tsec.mac.{MAC, MacAPI}
+
+import javax.crypto.spec.SecretKeySpec
+import javax.crypto.{KeyGenerator, Mac, SecretKey}
 
 protected[tsec] abstract class WithMacSigningKey[A](algo: String, keyLenBits: Int)
     extends MacKeyGenerator[A]

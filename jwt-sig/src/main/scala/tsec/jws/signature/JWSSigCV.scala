@@ -1,7 +1,5 @@
 package tsec.jws.signature
 
-import java.time.Instant
-
 import cats.MonadError
 import cats.effect.Sync
 import cats.instances.either._
@@ -12,6 +10,8 @@ import tsec.jwt.JWTClaims
 import tsec.jwt.algorithms.JWTSigAlgo
 import tsec.signature._
 import tsec.signature.jca._
+
+import java.time.Instant
 
 sealed abstract class JWSSigCV[F[_], A](
     implicit hs: JWSSerializer[JWSSignedHeader[A]],

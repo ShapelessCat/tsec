@@ -1,9 +1,5 @@
 package tsec.jwt
 
-import java.nio.charset.StandardCharsets
-import java.time.Instant
-import java.util.{LinkedHashMap => LHM}
-
 import cats.effect.Sync
 import cats.implicits._
 import io.circe.Decoder.Result
@@ -14,6 +10,9 @@ import tsec.common.{ByteUtils, SecureRandomId, TSecError}
 import tsec.internal.CirceShim
 import tsec.jws.JWSSerializer
 
+import java.nio.charset.StandardCharsets
+import java.time.Instant
+import java.util.{LinkedHashMap => LHM}
 import scala.concurrent.duration.FiniteDuration
 import scala.util.control.NonFatal
 
@@ -37,11 +36,11 @@ import scala.util.control.NonFatal
 sealed abstract case class JWTClaims(
     issuer: Option[String],
     subject: Option[String],
-    audience: Option[JWTAudience], //case-sensitive
+    audience: Option[JWTAudience], // case-sensitive
     expiration: Option[Instant],
     notBefore: Option[Instant], // IEEE Std 1003.1, 2013 Edition time in seconds
     issuedAt: Option[Instant], // IEEE Std 1003.1, 2013 Edition time in seconds
-    jwtId: Option[String], //Case sensitive, and in our implementation, secure enough using UUIDv4
+    jwtId: Option[String], // Case sensitive, and in our implementation, secure enough using UUIDv4
     private[tsec] val cachedObj: JsonObject
 ) { self =>
 

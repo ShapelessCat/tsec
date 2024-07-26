@@ -1,10 +1,10 @@
 package tsec.jwt.util
 
-import java.security.KeyFactory
-import java.security.spec.{PKCS8EncodedKeySpec, X509EncodedKeySpec}
-
 import cats.MonadError
 import tsec.signature.jca._
+
+import java.security.KeyFactory
+import java.security.spec.{PKCS8EncodedKeySpec, X509EncodedKeySpec}
 
 object ParseEncodedKeySpec {
 
@@ -68,8 +68,8 @@ object ParseEncodedKeySpec {
 
   /** Signature transcode to der as required by the JCA.
     * Adapted from the implementation in scala-jwt, which itself was adapted from
-    * jose4j, which itself was adapted from from org.apache.xml.security.algorithms.implementations.SignatureECDSA in the
-    * (Apache 2 licensed) Apache Santuario XML Security library.
+    * jose4j, which itself was adapted from from org.apache.xml.security.algorithms.implementations.SignatureECDSA in
+   *  the (Apache 2 licensed) Apache Santuario XML Security library.
     *
     * @param signature the signature to convert to DER
     * @param me MonadError Instance

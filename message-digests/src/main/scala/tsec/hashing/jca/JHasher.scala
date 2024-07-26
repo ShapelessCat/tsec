@@ -1,10 +1,10 @@
 package tsec.hashing.jca
 
-import java.security.MessageDigest
-
 import cats.Applicative
 import fs2.{Chunk, Pipe, Stream}
 import tsec.hashing.{CryptoHash, CryptoHasher}
+
+import java.security.MessageDigest
 
 final class JHasher[F[_], A] private[jca] (val algorithm: String)(
     implicit F: Applicative[F]
@@ -24,7 +24,7 @@ final class JHasher[F[_], A] private[jca] (val algorithm: String)(
         in.chunks
           .fold(genInstance) { (d, c) =>
             val bytes = c.toArray
-            d.update(bytes, 0, bytes.size)
+            d.update(bytes, 0, bytes.length)
             d
           }
           .flatMap { d =>
