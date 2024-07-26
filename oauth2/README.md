@@ -25,8 +25,8 @@ and an access token type called [Bearer](http://tools.ietf.org/html/rfc6750).
 
 ### AuthInfo
 
-```DataHandler``` returns ```AuthInfo``` as authorized information.
-```AuthInfo``` is made up of the following fields.
+`DataHandler` returns `AuthInfo` as authorized information.
+`AuthInfo` is made up of the following fields.
 
 ```scala
 case class AuthInfo[User](
@@ -38,11 +38,11 @@ case class AuthInfo[User](
 ```
 
 - user
-  - ```user``` is authorized by DataHandler
+  - `user` is authorized by DataHandler
 - clientId
-  - ```clientId``` which is sent from a client has been verified by ```DataHandler```
-  - If your application requires client_id for client authentication, you can get ```clientId``` as below
-    - ```val clientId = authInfo.clientId.getOrElse(throw new InvalidClient())```
+  - `clientId` which is sent from a client has been verified by `DataHandler`
+  - If your application requires client_id for client authentication, you can get `clientId` as below
+    - `val clientId = authInfo.clientId.getOrElse(throw new InvalidClient())`
 - scope
   - inform the client of the scope of the access token issued
 - redirectUri

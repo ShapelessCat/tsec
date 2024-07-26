@@ -12,11 +12,12 @@ For symmetric ciphers, we provide a low level as well as a high-level api constr
 
 Symmetric ciphers, as an introduction, have the following basic properties, for all non-empty m (as,  if a message is
 empty, you're not encrypting anything and c = m):
+
 ```
  E(K, m) = c
  D(K, c) = m
  D(K, E(K, m)) = m
- 
+
  Where:
     E: Encryption function
     D: Decryption function
@@ -41,13 +42,12 @@ These are the imports you will need for basic usage:
 ```
 
 In tsec, we provide a few default constructions for simple AES encryption:
-`AES/CTR` and `AES/CBC`. For Authenticated encryption, 
+`AES/CTR` and `AES/CBC`. For Authenticated encryption,
 we provide an `AES/GCM` construction.
 
 To be able to generate initialization vectors for a particular cipher, you must either
 have an implicit `IvStrategy[A]`(where A is the algorithm type, i.e `AES128GCM`) in scope, or pass it explicitly,
 or use it to generate a nonce of the right size:
-
 
 ```tut
   val toEncrypt = "hi hello welcome to tsec".utf8Bytes
@@ -88,7 +88,7 @@ For authenticated encryption and decryption
     } yield decrypted.toUtf8String // "hi hello welcome to tsec!"
 ```
 
-Finally, For more advanced usage, i.e you know which cipher you want specifically, you must import 
+Finally, For more advanced usage, i.e you know which cipher you want specifically, you must import
 both padding as well as the primitive package.
 
 Note: This is not recommended. Use at your own risk.

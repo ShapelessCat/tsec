@@ -9,7 +9,7 @@ title: "Digital Signatures"
 ### Note: Signatures depends on the bouncy castle JCA Security provider. You will get a no such provider if it s not installed
 
 For digital signatures, we support [almost all algorithms in the JCA](https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html#Signature),
-except for the <digest>with<encryption> style. 
+except for the <digest>with<encryption> style.
 
 The default `JCASigner` interprets into any `F[_]: Sync` from `cats-effect`.
 

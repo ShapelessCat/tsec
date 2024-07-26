@@ -3,9 +3,11 @@ layout: docs
 number: 7
 title: "Encrypted cookie auth"
 ---
+
 # Encrypted cookie authentication
 
 Encrypted cookie authenticator uses `TsecCookieSettings` for configuration:
+
 ```scala
   final case class TSecCookieSettings(
       cookieName: String = "tsec-auth-cookie",
@@ -38,11 +40,11 @@ final case class AuthEncryptedCookie[A, Id](
 )
 ```
 
-This authenticator uses cookies as the underlying mechanism to track state, however, any information such as expiry, 
-rolling window expiration or id is encrypted, as well as signed (AEAD encryption). 
+This authenticator uses cookies as the underlying mechanism to track state, however, any information such as expiry,
+rolling window expiration or id is encrypted, as well as signed (AEAD encryption).
 This authenticator has both stateful and stateless (however users are currently checked with the backend).
 
-* Choose between one of AES128, AES192 or AES256 to perform your Authenticated Encryption with AES-GCM. 
+* Choose between one of AES128, AES192 or AES256 to perform your Authenticated Encryption with AES-GCM.
 **Recommended default: AES128**.
 * User and token backing store as stated above, or just User store for stateless authenticator
 * Can be vulnerable to [CSRF](https://en.wikipedia.org/wiki/Cross-site_request_forgery), to be used with the CSRF middleware.
@@ -50,6 +52,7 @@ This authenticator has both stateful and stateless (however users are currently 
 * Your ID type for your user must have an `Encoder` and `Decoder` instance from circe
 
 ### Authenticator creation
+
 If want want to create services, create a request handler as such:
 
 ```tut:silent

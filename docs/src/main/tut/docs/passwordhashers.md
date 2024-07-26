@@ -6,15 +6,15 @@ title: "Password Hashers"
 
 ## Password Hashers
 
-For password hashers on the JCA, you have three options: BCrypt, SCrypt and HardenedSCrypt 
+For password hashers on the JCA, you have three options: BCrypt, SCrypt and HardenedSCrypt
 (Which is basically scrypt but with much more secure parameters, but a lot slower).
 
 SCrypt is recommended over BCrypt, as it improves over the memory-hardness of BCrypt. Over both,
 Argon2 from the libsodium package is preferred.
 
-Password hashing involves nonce generation, thus, it uses java's `SecureRandom` for the JCA, and 
+Password hashing involves nonce generation, thus, it uses java's `SecureRandom` for the JCA, and
 libsodium's own random function for the `libsodium` module. Thus,
-it is inherently side effecting. 
+it is inherently side effecting.
 
 Preferably, if possible, you want to receive your password as an `Array[Byte]` or
 `Array[Char]` without ever storing a string. TSec handles this case first and foremost.
@@ -25,7 +25,7 @@ be in memory until then, which poses a vulnerability. The main problem is that t
 if the attacker has direct access to memory, which is more dangerous than just accessing the hashes.
 
 That said, it's more of a precaution: If an attacker has direct memory access to your application, you most likely
-have much bigger problems to worry about (Compromised and vulnerable network/ports and things open to the internet). 
+have much bigger problems to worry about (Compromised and vulnerable network/ports and things open to the internet).
 So while it may be grasping at straws a bit, A security library should aim for the most secure default.
 
 So for the default case of char arrays, we can hash into any `Sync[F]` as such:
@@ -41,6 +41,7 @@ So for the default case of char arrays, we can hash into any `Sync[F]` as such:
 ```
 
 The string case is the same.
+
 ```tut:silent
   val bcryptHash: IO[PasswordHash[BCrypt]]                 = BCrypt.hashpw[IO]("hiThere")
   val scryptHash: IO[PasswordHash[SCrypt]]                 = SCrypt.hashpw[IO]("hiThere")
@@ -56,7 +57,7 @@ To Validate, you can check against a hash! Naturally, if it returns false, it wa
   } yield check
 ```
 
-Alternatively, if purity is your enemy, you can use the unsafe methods. Do note: 
+Alternatively, if purity is your enemy, you can use the unsafe methods. Do note:
 these may throw an exception for malformed input when checking password, and in `hashPwUnsafe`, we generate
 a nonce using `SecureRandom`, thus it is side effecting.
 

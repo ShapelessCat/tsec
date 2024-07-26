@@ -3,6 +3,7 @@ layout: docs
 number: 8
 title: "Signed Cookie Authentication"
 ---
+
 # Signed cookie authentication
 
 Signed cookie authenticator uses `TsecCookieSettings` for configuration:
@@ -42,13 +43,14 @@ This authenticator uses cookies as the underlying mechanism to track state. If y
 _do not_ use this: the information is not encrypted. This is not a stateless authenticator.
 
 Notes:
-* Choose between one of HMACSHA1, HMACSHA256, HMACSHA384 or HMACSHA512. **Recommended: HMACSHA256.** The main difference between
-all of these algorithms primarily lies in the difficulty to brute force the key: Higher number means higher search space, thus
-harder to simply brute force the key.
+
+* Choose between one of HMACSHA1, HMACSHA256, HMACSHA384 or HMACSHA512. **Recommended: HMACSHA256.** The main difference
+  between all of these algorithms primarily lies in the difficulty to brute force the key: Higher number means higher
+  search space, thus harder to simply brute force the key.
 * Can be vulnerable to [CSRF](https://en.wikipedia.org/wiki/Cross-site_request_forgery).
 * [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) doesn't play nice with cookies.
-* User and token backing store as stated above
-* Your ID type for your user must have an `Encoder` and `Decoder` instance from circe
+* User and token backing store as stated above.
+* Your ID type for your user must have an `Encoder` and `Decoder` instance from circe.
 
 ### Authenticator Creation
 

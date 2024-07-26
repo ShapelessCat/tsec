@@ -17,13 +17,13 @@ trait Authorization[F[_], Identity, Auth] {
 }
 ```
 
-That is: An effect type, an identity type (i.e your user type) and an authenticator (your token type). 
+That is: An effect type, an identity type (i.e your user type) and an authenticator (your token type).
 In essence, this allows you to perform authorization actions based on the type of secured request you have, and extend custom
 logic if you need to, to do complicated actions such as caching tokens for an endpoint where authorization may be expensive.
 
 Authorizations compose. After all, we can model it as a monoid (and we also provide a monoid instance for authorization)
- as such:
- 
+as such:
+
 ```scala
 object Authorization {
   implicit def authorizationMonoid[F[_]: Monad, I, Auth]: Monoid[Authorization[F, I, Auth]] =
@@ -41,7 +41,7 @@ object Authorization {
         }
     }
 }
-``` 
+```
 
 That is, our monoid empty is simply `pure` over the request.
 
@@ -57,11 +57,11 @@ or a `String`
 
 TSec provides a few built in instances for authorization common use cases.
 
-## Role-based authentication.
+## Role-based authentication
 
 We provide two traits for [RBAC](https://en.wikipedia.org/wiki/Role-based_access_control): BasicRBAC and DynamicRBAC.
 
-Both require an instance of `AuthorizationInfo[F, Role, U]`, where `Role` is your enum of roles that you have 
+Both require an instance of `AuthorizationInfo[F, Role, U]`, where `Role` is your enum of roles that you have
 (i.e Admin, User, Staff) and U is your user type. They also rely on an `AuthGroup`, which is a newtype over an `Array[A]`
 which we provide helpers to construct. It's essentially to construct an array like a set, for faster indexing (sets are slow as hell!)
 
@@ -72,11 +72,9 @@ it requires an instance of `trait DynamicAuthGroup[F[_], Role]`
 BasicRBAC provides a helper `.all`, which will let _all_ roles pass through, and an apply method which takes
 the allowed roles, i.e, from our tests:
 
-
 ```scala
   val basicRBAC = BasicRBAC[IO, DummyRole, AuthDummyUser, Int](DummyRole.Admin, DummyRole.Other) //Where DummyRole is some auth role
 ```
-
 
 ## Discretionary access control
 
@@ -111,6 +109,7 @@ Similar to say, the linux kernel, wherein you have roles that could be numerical
 we have a `HierarchyAuth` class.
 
 Note:
+
 * The highest allowed auth level is 0, like the linux kernel.
 * Higher authorization means smaller in number
 * Your authorization enum must be numerical.
@@ -135,13 +134,13 @@ object AuthLevel extends SimpleAuthEnum[AuthLevel, Int] {
 Wherein our highest authorized role is `CEO`, then you can create an authorization like:
 
 ```scala
-  val hierarchyAuth: IO[HierarchyAuth[F, AuthLevel, MyUserType, JWTMac[A]]] = 
-    HierarchyAuth[IO, AuthLevel, MyUserType, JWTMac[A]](AuthLevel.Staff) 
+  val hierarchyAuth: IO[HierarchyAuth[F, AuthLevel, MyUserType, JWTMac[A]]] =
+    HierarchyAuth[IO, AuthLevel, MyUserType, JWTMac[A]](AuthLevel.Staff)
 ```
 
 Hierarchy based authorization will let any higher or equal authorization pass, and deny all the rest,
 thus, in our example, using `AuthLevel.Staff` (aka 1), this authorization allows either `CEO` or `Staff` to use
-this endpoint. 
+this endpoint.
 
 ## Bell-LaPadula
 
@@ -158,7 +157,7 @@ sealed abstract case class BLPWriteAction[F[_], Role, A, Auth](authLevel: Role)(
     implicit authInfo: AuthorizationInfo[F, Role, A],
     enum: SimpleAuthEnum[Role, Int],
     F: MonadError[F, Throwable]
-) 
+)
 ```
 
 Similar to hierarchy-based auth, except that there is no reading to a higher authorization level (i.e lower in number),

@@ -27,11 +27,12 @@ final case class TSecBearerToken[I](
 ```
 
 This authenticator uses a `SecureRandomId` (A 32-bit Id generated with a secure random number generator) as a bearer
- token to authenticate with information held server-side.
- 
+token to authenticate with information held server-side.
+
 Notes:
+
 * Not vulnerable to [CSRF](https://en.wikipedia.org/wiki/Cross-site_request_forgery).
-* Okay to use with `CORS`
+* Okay to use with `CORS`.
 * Requires synchronized backing store.
 
 ### Authenticator creation
@@ -52,7 +53,7 @@ object BearerTokenExample {
   val bearerTokenStore =
     dummyBackingStore[IO, SecureRandomId, TSecBearerToken[Int]](s => SecureRandomId.coerce(s.id))
 
-  //We create a way to store our users. You can attach this to say, your doobie accessor
+  // We create a way to store our users. You can attach this to say, your doobie accessor
   val userStore: BackingStore[IO, Int, User] = dummyBackingStore[IO, Int, User](_.id)
 
   val settings: TSecTokenSettings = TSecTokenSettings(
@@ -67,8 +68,7 @@ object BearerTokenExample {
       settings
     )
 
-  val Auth =
-    SecuredRequestHandler(bearerTokenAuth)
+  val Auth = SecuredRequestHandler(bearerTokenAuth)
 
   val authservice: TSecAuthService[TSecBearerToken[Int], User, IO] = TSecAuthService {
     case GET -> Root asAuthed user =>

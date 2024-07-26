@@ -17,8 +17,8 @@ In short, to guard against this vulnerability, all you need to do is use the mid
 send such a token along with a custom header value. Given that an attacker forging a request cannot access the values
 of a cookie due to same-origin policy, this simple mechanism will guard against `CSRF`.
 
-With good application design, you should only need to
- guard your [unsafe methods](http://restcookbook.com/HTTP%20Methods/idempotency/),
+With good application design, you should only need to guard your
+[unsafe methods](http://restcookbook.com/HTTP%20Methods/idempotency/),
 aka any http methods that could possibly make any changes to data or alter state, as this is what a
 CSRF attacker is after. The `validate` method takes a
 predicate `Request[F] => Boolean`, which defaults to `_.methods.isSafe`. Any action which results in `true` for
@@ -38,8 +38,8 @@ All you need to use the CSRF middleware for tsec is:
 using `embed`
 * (Optional) A condition which does not csrf-validate requests that cause it to be true.
 
-
 A truncated signature of the class looks like this:
+
 ```scala
 final class TSecCSRF[F[_], A: MacTag: ByteEV] private[tsec] (
     key: MacSigningKey[A],

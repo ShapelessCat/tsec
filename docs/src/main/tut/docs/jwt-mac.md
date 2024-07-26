@@ -3,13 +3,15 @@ layout: docs
 number: 5
 title: "JWT"
 ---
-# JWT 
 
-Our JWT implementation addresses [this](https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/) vulnerability
-through the scala type system. As all `JWTs` are typed, both during encoding and decoding, there is no way to parse an arbitrary JWT for
-an endpoint before knowing the expected algorithm, thus, we avoid the ol' switcheroo.
+# JWT
+
+Our JWT implementation addresses [this](https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/)
+vulnerability through the scala type system. As all `JWTs` are typed, both during encoding and decoding, there is no
+way to parse an arbitrary JWT for an endpoint before knowing the expected algorithm, thus, we avoid the ol' switcheroo.
 
 The general imports for this module are as follows:
+
 ```tut:silent
 import cats.syntax.all._
 import cats.effect.Sync
@@ -26,17 +28,18 @@ To create JWT Claims, use the JWTClaims object:
 ```
 
 We can also add custom claims to a JWT object. Imagine we have some custom case class (though it can be any type):
+
 ```tut:silent
   import io.circe._
   import io.circe.syntax._
   import io.circe.generic.semiauto._
 
   case class Doge(suchChars: String, much32Bits: Int, so64Bits: Long)
-  
+
   //Note: Normally this would be in the companion
-  implicit val encoder: Encoder[Doge]       = deriveEncoder[Doge]
-  implicit val decoder: Decoder[Doge]       = deriveDecoder[Doge]
-  val WowSuchClaim                          = "Doge"
+  implicit val encoder: Encoder[Doge] = deriveEncoder[Doge]
+  implicit val decoder: Decoder[Doge] = deriveDecoder[Doge]
+  val WowSuchClaim                    = "Doge"
 ```
 
 We can add it via explicit json serialization as such:
@@ -45,11 +48,9 @@ We can add it via explicit json serialization as such:
   JWTClaims(customFields = Seq(WowSuchClaim -> Doge("w00f", 8008135, 80085L).asJson))
 ```
 
+The JWT module comes with two ways to work with JWT by default interpreting into a Target `F[_]` with a `Sync[F]`, or
+interpreting into `Either[Throwable, A]` if you do not like writing pure code.
 
-The JWT module comes with two ways to work with JWT by default interpreting
- into a Target `F[_]` with a `Sync[F]`, or interpreting into `Either[Throwable, A]`
- if you do not like writing pure code.
- 
 ```tut:silent
   /** You can interpret into any target Monad with an instance of Sync[F] using JwtMac */
   def jwtMonadic[F[_]: Sync]: F[JWTMac[HMACSHA256]] =
@@ -62,7 +63,7 @@ The JWT module comes with two ways to work with JWT by default interpreting
       isverified      <- JWTMac.verifyFromString[F, HMACSHA256](stringjwt, key) //You can verify straight from a string
       parsed          <- JWTMac.verifyAndParse[F, HMACSHA256](stringjwt, key) //Or verify and return the actual instance
     } yield parsed
-    
+
   import java.time.Instant
 
   /** Or using an impure either interpreter */

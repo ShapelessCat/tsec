@@ -14,8 +14,7 @@ technologies:
 
 [![Join the chat at https://gitter.im/tsecc/Lobby](https://badges.gitter.im/tsecc/Lobby.svg)](https://gitter.im/tsecc/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/jmcardon/tsec.svg?branch=master)](https://travis-ci.org/jmcardon/tsec)
-[ ![Latest Version](https://maven-badges.herokuapp.com/maven-central/io.github.jmcardon/tsec-common_2.12/badge.svg)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A"io.github.jmcardon"%20tsec)
-
+[![Latest Version](https://maven-badges.herokuapp.com/maven-central/io.github.jmcardon/tsec-common_2.12/badge.svg)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A"io.github.jmcardon"%20tsec)
 
 For the current progress, please refer to the [RoadMap](https://github.com/jmcardon/tsec/wiki).
 
@@ -23,16 +22,18 @@ For version changes and additions, including breaking changes, see either [relea
 or the [Version Changes](https://github.com/jmcardon/tsec/wiki/Version-Changes) page.
 
 ### Note on milestones:
+
 Our Notation for versions is:
-```
+
+```text
 X.X.X
 ^ ^ ^____Minor
 | |______Major
-|________Complete redesign (i.e scalaz 7 vs 8)  
+|________Complete redesign (i.e scalaz 7 vs 8)
 ```
 
 All `x.x.x-Mx` releases are milestone releases. Thus, we do not guarantee binary compatibility or no api-breakage until
-a concrete version(i.e `0.0.1`). We aim to keep userland-apis relatively stable, but 
+a concrete version(i.e `0.0.1`). We aim to keep userland-apis relatively stable, but
 internals shift as we find better/more performant abstractions.
 
 We will guarantee compatibility between minor versions (i.e 0.0.1 => 0.0.2) but not major versions (0.0.1 => 0.1.0)
@@ -40,7 +41,6 @@ We will guarantee compatibility between minor versions (i.e 0.0.1 => 0.0.2) but 
 0.0.1-M11 is here for scala 2.12+ and Cats 1.0.1!
 
 To get started, if you are on sbt 0.13.16+, add
-
 
 | Name                  | Description                                              | Examples |
 | -----                 | ----------                                               | -------- |
@@ -92,6 +92,7 @@ All tests can be run locally.
 [jwt-scala](https://github.com/pauldijou/jwt-scala)
 
 ## Big Thank you to our contributors (direct or indirect):
+
 [Robert Soeldner](https://github.com/rsoeldner) (Contributor/Maintainer)
 
 [Christopher Davenport](https://github.com/ChristopherDavenport)(Contributor/Maintainer)

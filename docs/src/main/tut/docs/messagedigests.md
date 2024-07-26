@@ -4,21 +4,19 @@ number: 2
 title: "Message Digests"
 ---
 
-# Hashing 
+# Hashing
 
-### Note: 
+### Note:
 
-This has been beaten to death everywhere, but please do not use
-these for Password Hashing. We provide [Password Hashers](/tsec/docs/passwordhashers.html) 
-to use for this purpose under the password hashers section.
+This has been beaten to death everywhere, but please do not use these for Password Hashing.
+We provide [Password Hashers](/tsec/docs/passwordhashers.html) to use for this purpose under
+the password hashers section.
 
 ## Usage
 
-For `TSec`, we support MD5, SHA1, SHA256 and SHA512 hashing of byte arrays, as well as
-hashing of byte streams (fs2 does this as well, but we simply provide the helper via the type.
-As a matter of fact, our implementation is identical to the fs2 implementation for the JCA, but different
-for libsodium)
-
+For `TSec`, we support MD5, SHA1, SHA256 and SHA512 hashing of byte arrays, as well as hashing of byte
+streams (fs2 does this as well, but we simply provide the helper via the type. As a matter of fact, our
+implementation is identical to the fs2 implementation for the JCA, but different for libsodium)
 
 ```tut
   /** Imports */
@@ -28,7 +26,7 @@ for libsodium)
   import tsec.common._
   import tsec.hashing.jca._ //For this example, we will use our byteutil helpers
 
-  /**For direct byte pickling, use: */
+  /** For direct byte pickling, use: */
   "hiHello".utf8Bytes.hash[SHA1]
   "hiHello".utf8Bytes.hash[SHA256]
   "hiHello".utf8Bytes.hash[SHA512]
@@ -44,10 +42,9 @@ for libsodium)
   SHA256.hash[Id]("hiHello".utf8Bytes)
   /** Some Monad with a sync bound: **/
   SHA512.hash[IO]("hiHello".utf8Bytes)
-  
-  
+
+
   def hashPipeExample[F[_]: Sync](str: Stream[F, Byte]): Stream[F, Byte] = {
     str.through(SHA512.hashPipe[F])
   }
 ```
-

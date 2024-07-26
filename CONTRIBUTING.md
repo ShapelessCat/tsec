@@ -1,4 +1,4 @@
-## Contributing to tsec
+# Contributing to tsec
 
 Do!
 
