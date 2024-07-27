@@ -1,11 +1,10 @@
 package tsec.oauth2.provider
 
-import java.nio.charset.StandardCharsets
-
 import cats.implicits._
 import tsec.common._
 import tsec.oauth2.provider.grantHandler.GrantType
 
+import java.nio.charset.StandardCharsets
 import scala.collection.immutable.TreeMap
 import scala.util.Try
 
@@ -84,7 +83,7 @@ object ValidatedRequest {
         .get("refresh_token")
         .flatMap(_.headOption)
         .toRight(InvalidRequest("missing refresh_token param"))
-    } yield new ValidatedRefreshToken(credential, res, getScope(params))
+    } yield ValidatedRefreshToken(credential, res, getScope(params))
 
   def createValidatedClientCredentials(
       headers: Map[String, Seq[String]],
@@ -136,14 +135,12 @@ object ValidatedRequest {
     } yield r
 
     val res = authHeader.fold[Either[OAuthError, ClientCredential]](
-      e => {
-        e match {
-          case InvalidAuthorizationHeader => InvalidAuthorizationHeader.asLeft[ClientCredential]
-          case _ =>
-            clientCredentialByParam(params).toRight(
-              InvalidClient(s"Failed to parse client credential from header (${e.description}) and params")
-            )
-        }
+      {
+        case InvalidAuthorizationHeader => InvalidAuthorizationHeader.asLeft[ClientCredential]
+        case e =>
+          clientCredentialByParam(params).toRight(
+            InvalidClient(s"Failed to parse client credential from header (${e.description}) and params")
+          )
       },
       Right(_)
     )

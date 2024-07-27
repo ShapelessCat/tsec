@@ -1,19 +1,13 @@
 package tsec.oauth2.provider
 
-import java.time.Instant
-
 import cats.effect.IO
-import cats.syntax.either._
-import org.scalatest.matchers.should.Matchers._
-import org.scalatest._
-import tsec.oauth2.provider.ValidatedRequest.ValidatedPasswordNoClientCred
-import tsec.oauth2.provider.ValidatedRequest.ValidatedPasswordWithClientCred
-import tsec.oauth2.provider.grantHandler.PasswordNoClientCredGrantHandler
-import tsec.oauth2.provider.grantHandler.PasswordNoClientCredHandler
-import tsec.oauth2.provider.grantHandler.PasswordWithClientCredGrantHandler
-import tsec.oauth2.provider.grantHandler.PasswordWithClientCredHandler
 import cats.effect.unsafe.implicits.global
+import org.scalatest._
+import org.scalatest.matchers.should.Matchers._
+import tsec.oauth2.provider.ValidatedRequest.{ValidatedPasswordNoClientCred, ValidatedPasswordWithClientCred}
+import tsec.oauth2.provider.grantHandler.{PasswordNoClientCredGrantHandler, PasswordNoClientCredHandler, PasswordWithClientCredGrantHandler, PasswordWithClientCredHandler}
 
+import java.time.Instant
 import scala.concurrent.duration._
 
 class PasswordSpec extends flatspec.AnyFlatSpec with OptionValues {

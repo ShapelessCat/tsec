@@ -1,8 +1,9 @@
 package tsec.oauth2.provider
 
-import cats.implicits._
-import java.net.URLDecoder
 import cats.data.NonEmptyList
+import cats.implicits._
+
+import java.net.URLDecoder
 
 final case class FetchResult(token: String, params: Map[String, String])
 
@@ -19,7 +20,7 @@ object AccessTokenFetcher {
 
     override def fetch(request: ProtectedResourceRequest): Either[InvalidRequest, FetchResult] = {
       val t      = request.oauthToken orElse (request.accessToken)
-      val params = request.params.filter { case (_, v) => !v.isEmpty } map { case (k, v) => (k, v.head) }
+      val params = request.params.filter { case (_, v) => v.nonEmpty } map { case (k, v) => (k, v.head) }
       t.map(s => FetchResult(s, params - ("oauth_token", "access_token")))
         .toRight(InvalidRequest("missing access token"))
     }

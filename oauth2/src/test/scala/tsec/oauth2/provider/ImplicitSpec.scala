@@ -1,17 +1,14 @@
 package tsec.oauth2.provider
 
-import java.time.Instant
-
 import cats.effect.IO
-import cats.syntax.either._
-import org.scalatest.matchers.should.Matchers._
+import cats.effect.unsafe.implicits.global
 import org.scalatest._
 import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.matchers.should.Matchers._
 import tsec.oauth2.provider.ValidatedRequest.ValidatedImplicit
-import tsec.oauth2.provider.grantHandler.ImplicitGrantHandler
-import tsec.oauth2.provider.grantHandler.ImplicitHandler
-import cats.effect.unsafe.implicits.global
+import tsec.oauth2.provider.grantHandler.{ImplicitGrantHandler, ImplicitHandler}
 
+import java.time.Instant
 import scala.concurrent.duration._
 
 class ImplicitSpec extends flatspec.AnyFlatSpec with ScalaFutures with OptionValues {

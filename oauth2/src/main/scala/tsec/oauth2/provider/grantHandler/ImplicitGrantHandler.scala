@@ -1,9 +1,9 @@
 package tsec.oauth2.provider
 package grantHandler
 
-import cats.implicits._
 import cats.data.EitherT
 import cats.effect.Sync
+import cats.implicits._
 import tsec.oauth2.provider.ValidatedRequest._
 
 class ImplicitGrantHandler[F[_], U](handler: ImplicitHandler[F, U]) extends GrantHandler[F, U] {

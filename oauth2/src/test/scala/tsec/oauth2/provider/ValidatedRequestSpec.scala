@@ -1,6 +1,5 @@
 package tsec.oauth2.provider
 
-import cats.syntax.either._
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers._
 

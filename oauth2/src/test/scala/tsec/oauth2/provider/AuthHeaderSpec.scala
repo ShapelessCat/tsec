@@ -1,8 +1,6 @@
 package tsec.oauth2.provider
 
-import cats.syntax.either._
 import org.scalatest._
-import org.scalatest.matchers.dsl._
 import org.scalatest.matchers.should.Matchers._
 import tsec.oauth2.provider.AccessTokenFetcher.AuthHeader
 

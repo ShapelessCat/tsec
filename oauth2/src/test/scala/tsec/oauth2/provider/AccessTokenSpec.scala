@@ -1,15 +1,12 @@
 package tsec.oauth2.provider
 
-import java.time.Instant
-import java.time.{ZoneOffset, ZonedDateTime}
-
 import cats.effect.IO
-
-import scala.concurrent.duration._
-import org.scalatest.matchers.must.Matchers._
-import org.scalatest.matchers.should.Matchers._
-import org.scalatest._
 import cats.effect.unsafe.implicits.global
+import org.scalatest._
+import org.scalatest.matchers.should.Matchers._
+
+import java.time.{Instant, ZoneOffset, ZonedDateTime}
+import scala.concurrent.duration._
 
 class AccessTokenSpec extends flatspec.AnyFlatSpec {
 

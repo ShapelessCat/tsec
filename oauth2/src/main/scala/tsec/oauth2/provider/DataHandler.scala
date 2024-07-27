@@ -1,12 +1,10 @@
 package tsec.oauth2.provider
 
-import java.time.Instant
-
-import cats.implicits._
 import cats.effect.Sync
+import cats.implicits._
 
-import scala.concurrent.duration._
-import scala.concurrent.duration.FiniteDuration
+import java.time.Instant
+import scala.concurrent.duration.{DurationLong, FiniteDuration}
 
 /**
   * Access token
@@ -32,7 +30,7 @@ final case class AccessToken(
     val expTime = createdAt.toEpochMilli + l.toMillis
     for {
       now <- F.delay(System.currentTimeMillis)
-      t   <- F.pure(((expTime - now) / 1000) milli)
+      t   <- F.pure(((expTime - now) / 1000).milli)
     } yield t
   }
 }

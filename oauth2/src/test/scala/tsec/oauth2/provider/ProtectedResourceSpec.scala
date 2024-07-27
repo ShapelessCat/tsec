@@ -1,11 +1,11 @@
 package tsec.oauth2.provider
 
-import java.time.Instant
-
 import cats.effect.IO
+import cats.effect.unsafe.implicits.global
 import org.scalatest._
 import org.scalatest.matchers.should.Matchers._
-import cats.effect.unsafe.implicits.global
+
+import java.time.Instant
 import scala.concurrent.duration._
 
 class ProtectedResourceSpec extends flatspec.AnyFlatSpec {

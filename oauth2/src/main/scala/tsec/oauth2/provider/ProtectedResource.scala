@@ -1,8 +1,8 @@
 package tsec.oauth2.provider
 
-import cats.implicits._
 import cats.data.EitherT
 import cats.effect.Sync
+import cats.implicits._
 import tsec.oauth2.provider.AccessTokenFetcher._
 
 object ProtectedResource {

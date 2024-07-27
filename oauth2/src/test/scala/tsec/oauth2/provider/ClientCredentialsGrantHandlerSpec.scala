@@ -1,16 +1,13 @@
 package tsec.oauth2.provider
 
-import java.time.Instant
-
 import cats.effect.IO
-import cats.syntax.either._
-import org.scalatest.matchers.should.Matchers._
-import org.scalatest._
-import tsec.oauth2.provider.ValidatedRequest.ValidatedClientCredentials
-import tsec.oauth2.provider.grantHandler.ClientCredentialsGrantHandler
-import tsec.oauth2.provider.grantHandler.ClientCredentialsHandler
 import cats.effect.unsafe.implicits.global
+import org.scalatest._
+import org.scalatest.matchers.should.Matchers._
+import tsec.oauth2.provider.ValidatedRequest.ValidatedClientCredentials
+import tsec.oauth2.provider.grantHandler.{ClientCredentialsGrantHandler, ClientCredentialsHandler}
 
+import java.time.Instant
 import scala.concurrent.duration._
 
 class ClientCredentialsGrantHandlerSpec extends flatspec.AnyFlatSpec with OptionValues {

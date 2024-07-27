@@ -1,7 +1,6 @@
 package tsec.oauth2.provider
 
 /**
-  *
   * Provide access to <b>Protected Resource</b> phase support for using OAuth 2.0.
   *
   * <h3>[Access to Protected Resource phase]</h3>
