@@ -401,5 +401,5 @@ lazy val noPublishSettings = {
 }
 
 def isDotty(string: String): Boolean = {
-  VersionNumber(string)._1.exists(_ == 3L)
+  VersionNumber(string)._1.contains(3L)
 }

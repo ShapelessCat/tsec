@@ -60,7 +60,7 @@ package object authentication {
         onNotAuthenticated: Request[F] => F[Response[F]]
     ): TSecMiddleware[F, I, Auth] =
       service => {
-        Kleisli { r: Request[F] =>
+        Kleisli { (r: Request[F]) =>
           OptionT.liftF(
             authedStuff
               .run(r)
@@ -75,7 +75,7 @@ package object authentication {
         onNotAuthenticated: Request[F] => F[Response[F]]
     ): TSecMiddleware[F, I, Auth] =
       service => {
-        Kleisli { r: Request[F] =>
+        Kleisli { (r: Request[F]) =>
           authedStuff
             .run(r)
             .flatMap(service.mapF(o => OptionT.liftF(o.getOrElse(Response[F](Status.NotFound)))).run)
@@ -121,7 +121,7 @@ package object authentication {
         pf: PartialFunction[SecuredRequest[F, I, A], F[Response[F]]],
         onNotAuthorized: SecuredRequest[F, I, A] => OptionT[F, Response[F]]
     )(implicit F: Monad[F]): TSecAuthService[I, A, F] =
-      Kleisli { req: SecuredRequest[F, I, A] =>
+      Kleisli { (req: SecuredRequest[F, I, A]) =>
         OptionT.liftF(auth).flatMap { auth =>
           auth
             .isAuthorized(req)
@@ -139,7 +139,7 @@ package object authentication {
         pf: PartialFunction[SecuredRequest[F, I, A], F[Response[F]]],
         onNotAuthorized: SecuredRequest[F, I, A] => OptionT[F, Response[F]]
     )(implicit F: Monad[F]): TSecAuthService[I, A, F] =
-      Kleisli { req: SecuredRequest[F, I, A] =>
+      Kleisli { (req: SecuredRequest[F, I, A]) =>
         auth
           .isAuthorized(req)
           .flatMap(_ => pf.andThen(OptionT.liftF(_)).applyOrElse(req, Function.const(OptionT.none[F, Response[F]])))
@@ -192,7 +192,7 @@ package object authentication {
         authedStuff: Kleisli[OptionT[F, *], Request[F], SecuredRequest[F, I, Auth]]
     ): UserAwareMiddleware[F, I, Auth] =
       service => {
-        Kleisli { r: Request[F] =>
+        Kleisli { (r: Request[F]) =>
           OptionT.liftF(
             authedStuff
               .map(r => UserAwareRequest(r.request, Some((r.identity, r.authenticator))))

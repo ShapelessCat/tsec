@@ -52,7 +52,7 @@ final class SignedCookieAuthenticatorTests extends RequestAuthenticatorSpec {
         SignedCookieAuthenticator[IO, Int, DummyUser, A](
           TSecCookieSettings(cookieName, secure = false, expiryDuration = 10.minutes, maxIdle = Some(10.minutes)),
           store,
-          dummyStore,
+          this.dummyStore,
           keyGenerator.generateKey
         ).create(123)
     }

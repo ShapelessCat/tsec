@@ -237,7 +237,7 @@ object SignedCookieAuthenticator {
           def refresh(authenticator: AuthenticatedCookie[Alg, I]): F[AuthenticatedCookie[Alg, I]] =
             F.delay(Instant.now()).flatMap { now =>
               val updated = authenticator.copy[Alg, I](lastTouched = Some(now))
-              tokenStore.update(updated).map(_ => updated)
+              this.tokenStore.update(updated).map(_ => updated)
             }
         }
 

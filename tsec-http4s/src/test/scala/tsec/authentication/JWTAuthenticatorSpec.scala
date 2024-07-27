@@ -125,7 +125,7 @@ class JWTAuthenticatorSpec extends RequestAuthenticatorSpec {
       }
 
       def wrongKeyAuthenticator: IO[AugmentedJWT[A, Int]] =
-        tf(store, dummyStore, macKeyGen.generateKey).create(123)
+        tf(store, this.dummyStore, macKeyGen.generateKey).create(123)
     }
   }
 
@@ -162,7 +162,7 @@ class JWTAuthenticatorSpec extends RequestAuthenticatorSpec {
       }
 
       def wrongKeyAuthenticator: IO[AugmentedJWT[A, Int]] =
-        tf(dummyStore, macKey).create(123)
+        tf(this.dummyStore, macKey).create(123)
     }
   }
 

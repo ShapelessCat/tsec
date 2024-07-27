@@ -68,7 +68,7 @@ class EncryptedCookieAuthenticatorSpec extends RequestAuthenticatorSpec {
           .withBackingStore[IO, Int, DummyUser, A](
             settings,
             store,
-            dummyStore,
+            this.dummyStore,
             cipherAPI.unsafeGenerateKey
           )
           .create(123)
@@ -128,7 +128,7 @@ class EncryptedCookieAuthenticatorSpec extends RequestAuthenticatorSpec {
 
       def wrongKeyAuthenticator: IO[AuthEncryptedCookie[A, Int]] =
         EncryptedCookieAuthenticator
-          .stateless[IO, Int, DummyUser, A](settings, dummyStore, cipherAPI.unsafeGenerateKey)
+          .stateless[IO, Int, DummyUser, A](settings, this.dummyStore, cipherAPI.unsafeGenerateKey)
           .create(123)
     }
   }
