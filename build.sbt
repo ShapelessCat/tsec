@@ -124,7 +124,7 @@ lazy val commonSettings = Seq(
   ),
   ThisBuild / organization := "io.github.jmcardon",
   scalaVersion := crossScalaVersions.value.last,
-  crossScalaVersions := Seq("2.12.13", "2.13.6", "3.0.1"),
+  crossScalaVersions := Seq("2.12.19", "2.13.14", "3.3.3"),
   Test / fork := true,
   run / fork := true,
   // doc / scalacOptions ++= Seq(
@@ -136,7 +136,7 @@ lazy val commonSettings = Seq(
   libraryDependencies ++= {
     if (isDotty(scalaVersion.value)) Seq.empty
     else Seq(
-      compilerPlugin("org.typelevel" % "kind-projector" % "0.13.0" cross CrossVersion.full),
+      compilerPlugin("org.typelevel" % "kind-projector" % "0.13.3" cross CrossVersion.full),
       compilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1"),
     )
   },
@@ -393,8 +393,8 @@ lazy val publishSettings = Seq(
 lazy val noPublishSettings = {
   Seq(
     publish / skip := true,
-    publish := (()),
-    publishLocal := (()),
+    publish := (),
+    publishLocal := (),
     publishArtifact := false,
     publishTo := None
   )
